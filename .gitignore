@@ -1,0 +1,14 @@
+CMU-MultimodalSDK/
+CMU-MultimodalSDK-Tutorials/data
+
+
+# Python bytecode files
+*.pyc
+__pycache__/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Any pdf files
+*.pdf
+
