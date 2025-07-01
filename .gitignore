@@ -1,3 +1,5 @@
+# The SDK and data (which is uplaoded on Huggingface) are large, so we ignore them
+# SDK available at official repo of CMU Multicomp Lab
 CMU-MultimodalSDK/
 CMU-MultimodalSDK-Tutorials/data
 
@@ -11,4 +13,7 @@ __pycache__/
 
 # Any pdf files
 *.pdf
+
+# Trial/experimentation notebook
+My-Experiments/new.ipynb
 
