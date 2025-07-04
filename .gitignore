@@ -1,6 +1,6 @@
 # The SDK and data (which is uplaoded on Huggingface) are large, so we ignore them
 # SDK available at official repo of CMU Multicomp Lab
-CMU-MultimodalSDK/
+CMU-MultimodalSDK/ 
 CMU-MultimodalSDK-Tutorials/data
 
 
@@ -14,6 +14,17 @@ __pycache__/
 # Any pdf files
 *.pdf
 
-# Trial/experimentation notebook
-My-Experiments/new.ipynb
+# Trial/experimentation notebooks
+trash/
+
+
+# CARAT's data
+CARAT/data/train_valid_test.pt
+CARAT/data/cmu_mosei_unaligned_ree.pt
+
+
+# Model logs
+CARAT/model_saved/
+
+
 

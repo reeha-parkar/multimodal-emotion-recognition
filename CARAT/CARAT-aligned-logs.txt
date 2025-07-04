@@ -1,0 +1,634 @@
++ torchrun --nproc_per_node=1 main.py --do_train --epochs=20 --lr 5e-5 --seed 1 --visual_num_hidden_layers 4 --text_num_hidden_layers 6 --audio_num_hidden_layers 4 --binary_threshold 0.25 --recon_mse_weight 1.0 --aug_mse_weight 1.0 --beta_mse_weight 0.0 --lsr_clf_weight 0.01 --recon_clf_weight 0.0 --aug_clf_weight 0.1 --shuffle_aug_clf_weight 0.1 --total_aug_clf_weight 1.0 --cl_weight 1.0 --aligned --data_path ./data/train_valid_test.pt
+07/03/2025 15:07:06 - INFO -   device: cuda:0 n_gpu: 1
+07/03/2025 15:07:06 - WARNING -   Set text_config.num_hidden_layers: 6.
+07/03/2025 15:07:06 - WARNING -   Set visual_config.num_hidden_layers: 4.
+07/03/2025 15:07:07 - WARNING -   Set audio_config.num_hidden_layers: 4.
+07/03/2025 15:08:25 - INFO -   ***** Running training *****
+07/03/2025 15:08:25 - INFO -     Num steps = 5100
+07/03/2025 15:08:28 - INFO -   Epoch: 1/20, Step: 10/255, Lr: , loss: 13.277368
+07/03/2025 15:08:30 - INFO -   Epoch: 1/20, Step: 20/255, Lr: , loss: 12.436488
+07/03/2025 15:08:33 - INFO -   Epoch: 1/20, Step: 30/255, Lr: , loss: 11.521389
+07/03/2025 15:08:35 - INFO -   Epoch: 1/20, Step: 40/255, Lr: , loss: 11.073680
+07/03/2025 15:08:37 - INFO -   Epoch: 1/20, Step: 50/255, Lr: , loss: 10.851139
+07/03/2025 15:08:39 - INFO -   Epoch: 1/20, Step: 60/255, Lr: , loss: 10.357578
+07/03/2025 15:08:41 - INFO -   Epoch: 1/20, Step: 70/255, Lr: , loss: 9.960312
+07/03/2025 15:08:44 - INFO -   Epoch: 1/20, Step: 80/255, Lr: , loss: 9.772214
+07/03/2025 15:08:46 - INFO -   Epoch: 1/20, Step: 90/255, Lr: , loss: 9.285623
+07/03/2025 15:08:48 - INFO -   Epoch: 1/20, Step: 100/255, Lr: , loss: 9.137326
+07/03/2025 15:08:50 - INFO -   Epoch: 1/20, Step: 110/255, Lr: , loss: 8.866022
+07/03/2025 15:08:52 - INFO -   Epoch: 1/20, Step: 120/255, Lr: , loss: 8.671400
+07/03/2025 15:08:55 - INFO -   Epoch: 1/20, Step: 130/255, Lr: , loss: 8.415915
+07/03/2025 15:08:57 - INFO -   Epoch: 1/20, Step: 140/255, Lr: , loss: 8.515197
+07/03/2025 15:08:59 - INFO -   Epoch: 1/20, Step: 150/255, Lr: , loss: 8.260188
+07/03/2025 15:09:01 - INFO -   Epoch: 1/20, Step: 160/255, Lr: , loss: 8.316177
+07/03/2025 15:09:04 - INFO -   Epoch: 1/20, Step: 170/255, Lr: , loss: 8.309753
+07/03/2025 15:09:06 - INFO -   Epoch: 1/20, Step: 180/255, Lr: , loss: 8.250196
+07/03/2025 15:09:08 - INFO -   Epoch: 1/20, Step: 190/255, Lr: , loss: 8.117384
+07/03/2025 15:09:10 - INFO -   Epoch: 1/20, Step: 200/255, Lr: , loss: 7.971960
+07/03/2025 15:09:12 - INFO -   Epoch: 1/20, Step: 210/255, Lr: , loss: 8.192389
+07/03/2025 15:09:15 - INFO -   Epoch: 1/20, Step: 220/255, Lr: , loss: 8.041058
+07/03/2025 15:09:17 - INFO -   Epoch: 1/20, Step: 230/255, Lr: , loss: 7.916980
+07/03/2025 15:09:19 - INFO -   Epoch: 1/20, Step: 240/255, Lr: , loss: 8.022154
+07/03/2025 15:09:21 - INFO -   Epoch: 1/20, Step: 250/255, Lr: , loss: 7.994005
+07/03/2025 15:09:22 - INFO -   Epoch 1/20 Finished, Train Loss: 9.266637.
+07/03/2025 15:09:23 - INFO -    res: f1 0.422377,	p 0.787553,	r 0.288571,	acc 0.302800.
+07/03/2025 15:09:23 - INFO -   ***** Running valing *****
+07/03/2025 15:09:24 - INFO -    res: f1 0.494985,	p 0.512790,	r 0.478374,	acc 0.416200.
+07/03/2025 15:09:24 - INFO -   Model saved to ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_0.bin.
+07/03/2025 15:09:24 - INFO -   The best model is: ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_0.bin., the f1 is: 0.4950
+07/03/2025 15:09:26 - INFO -   Epoch: 2/20, Step: 10/255, Lr: , loss: 8.014104
+07/03/2025 15:09:28 - INFO -   Epoch: 2/20, Step: 20/255, Lr: , loss: 7.980245
+07/03/2025 15:09:30 - INFO -   Epoch: 2/20, Step: 30/255, Lr: , loss: 7.788347
+07/03/2025 15:09:33 - INFO -   Epoch: 2/20, Step: 40/255, Lr: , loss: 7.795795
+07/03/2025 15:09:35 - INFO -   Epoch: 2/20, Step: 50/255, Lr: , loss: 7.865993
+07/03/2025 15:09:37 - INFO -   Epoch: 2/20, Step: 60/255, Lr: , loss: 7.748906
+07/03/2025 15:09:39 - INFO -   Epoch: 2/20, Step: 70/255, Lr: , loss: 7.935382
+07/03/2025 15:09:42 - INFO -   Epoch: 2/20, Step: 80/255, Lr: , loss: 7.842992
+07/03/2025 15:09:44 - INFO -   Epoch: 2/20, Step: 90/255, Lr: , loss: 7.781725
+07/03/2025 15:09:46 - INFO -   Epoch: 2/20, Step: 100/255, Lr: , loss: 7.834869
+07/03/2025 15:09:48 - INFO -   Epoch: 2/20, Step: 110/255, Lr: , loss: 7.898306
+07/03/2025 15:09:50 - INFO -   Epoch: 2/20, Step: 120/255, Lr: , loss: 7.843371
+07/03/2025 15:09:53 - INFO -   Epoch: 2/20, Step: 130/255, Lr: , loss: 7.857248
+07/03/2025 15:09:55 - INFO -   Epoch: 2/20, Step: 140/255, Lr: , loss: 7.718228
+07/03/2025 15:09:57 - INFO -   Epoch: 2/20, Step: 150/255, Lr: , loss: 7.715768
+07/03/2025 15:09:59 - INFO -   Epoch: 2/20, Step: 160/255, Lr: , loss: 7.823695
+07/03/2025 15:10:02 - INFO -   Epoch: 2/20, Step: 170/255, Lr: , loss: 7.745456
+07/03/2025 15:10:04 - INFO -   Epoch: 2/20, Step: 180/255, Lr: , loss: 7.779591
+07/03/2025 15:10:06 - INFO -   Epoch: 2/20, Step: 190/255, Lr: , loss: 7.694754
+07/03/2025 15:10:08 - INFO -   Epoch: 2/20, Step: 200/255, Lr: , loss: 7.860136
+07/03/2025 15:10:11 - INFO -   Epoch: 2/20, Step: 210/255, Lr: , loss: 7.686919
+07/03/2025 15:10:13 - INFO -   Epoch: 2/20, Step: 220/255, Lr: , loss: 7.766694
+07/03/2025 15:10:15 - INFO -   Epoch: 2/20, Step: 230/255, Lr: , loss: 7.727307
+07/03/2025 15:10:17 - INFO -   Epoch: 2/20, Step: 240/255, Lr: , loss: 7.605792
+07/03/2025 15:10:20 - INFO -   Epoch: 2/20, Step: 250/255, Lr: , loss: 7.794580
+07/03/2025 15:10:21 - INFO -   Epoch 2/20 Finished, Train Loss: 7.801399.
+07/03/2025 15:10:21 - INFO -    res: f1 0.515670,	p 0.621681,	r 0.440547,	acc 0.424200.
+07/03/2025 15:10:21 - INFO -   ***** Running valing *****
+07/03/2025 15:10:22 - INFO -    res: f1 0.519346,	p 0.538523,	r 0.501487,	acc 0.446100.
+07/03/2025 15:10:22 - INFO -   Model saved to ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_1.bin.
+07/03/2025 15:10:22 - INFO -   The best model is: ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_1.bin., the f1 is: 0.5193
+07/03/2025 15:10:24 - INFO -   Epoch: 3/20, Step: 10/255, Lr: , loss: 7.678846
+07/03/2025 15:10:27 - INFO -   Epoch: 3/20, Step: 20/255, Lr: , loss: 7.794499
+07/03/2025 15:10:29 - INFO -   Epoch: 3/20, Step: 30/255, Lr: , loss: 7.627359
+07/03/2025 15:10:31 - INFO -   Epoch: 3/20, Step: 40/255, Lr: , loss: 7.786043
+07/03/2025 15:10:33 - INFO -   Epoch: 3/20, Step: 50/255, Lr: , loss: 7.659563
+07/03/2025 15:10:35 - INFO -   Epoch: 3/20, Step: 60/255, Lr: , loss: 7.630256
+07/03/2025 15:10:38 - INFO -   Epoch: 3/20, Step: 70/255, Lr: , loss: 7.632775
+07/03/2025 15:10:40 - INFO -   Epoch: 3/20, Step: 80/255, Lr: , loss: 7.653720
+07/03/2025 15:10:42 - INFO -   Epoch: 3/20, Step: 90/255, Lr: , loss: 7.731682
+07/03/2025 15:10:44 - INFO -   Epoch: 3/20, Step: 100/255, Lr: , loss: 7.732554
+07/03/2025 15:10:47 - INFO -   Epoch: 3/20, Step: 110/255, Lr: , loss: 7.556099
+07/03/2025 15:10:49 - INFO -   Epoch: 3/20, Step: 120/255, Lr: , loss: 7.712521
+07/03/2025 15:10:51 - INFO -   Epoch: 3/20, Step: 130/255, Lr: , loss: 7.663658
+07/03/2025 15:10:53 - INFO -   Epoch: 3/20, Step: 140/255, Lr: , loss: 7.610650
+07/03/2025 15:10:56 - INFO -   Epoch: 3/20, Step: 150/255, Lr: , loss: 7.584917
+07/03/2025 15:10:58 - INFO -   Epoch: 3/20, Step: 160/255, Lr: , loss: 7.686707
+07/03/2025 15:11:00 - INFO -   Epoch: 3/20, Step: 170/255, Lr: , loss: 7.720812
+07/03/2025 15:11:02 - INFO -   Epoch: 3/20, Step: 180/255, Lr: , loss: 7.640600
+07/03/2025 15:11:05 - INFO -   Epoch: 3/20, Step: 190/255, Lr: , loss: 7.667814
+07/03/2025 15:11:07 - INFO -   Epoch: 3/20, Step: 200/255, Lr: , loss: 7.646531
+07/03/2025 15:11:09 - INFO -   Epoch: 3/20, Step: 210/255, Lr: , loss: 7.603520
+07/03/2025 15:11:11 - INFO -   Epoch: 3/20, Step: 220/255, Lr: , loss: 7.583610
+07/03/2025 15:11:14 - INFO -   Epoch: 3/20, Step: 230/255, Lr: , loss: 7.524062
+07/03/2025 15:11:16 - INFO -   Epoch: 3/20, Step: 240/255, Lr: , loss: 7.654542
+07/03/2025 15:11:18 - INFO -   Epoch: 3/20, Step: 250/255, Lr: , loss: 7.564532
+07/03/2025 15:11:19 - INFO -   Epoch 3/20 Finished, Train Loss: 7.650554.
+07/03/2025 15:11:20 - INFO -    res: f1 0.539815,	p 0.679542,	r 0.447748,	acc 0.452000.
+07/03/2025 15:11:20 - INFO -   ***** Running valing *****
+07/03/2025 15:11:21 - INFO -    res: f1 0.528521,	p 0.598962,	r 0.472905,	acc 0.445700.
+07/03/2025 15:11:21 - INFO -   Model saved to ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_2.bin.
+07/03/2025 15:11:21 - INFO -   The best model is: ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_2.bin., the f1 is: 0.5285
+07/03/2025 15:11:23 - INFO -   Epoch: 4/20, Step: 10/255, Lr: , loss: 7.644730
+07/03/2025 15:11:25 - INFO -   Epoch: 4/20, Step: 20/255, Lr: , loss: 7.682360
+07/03/2025 15:11:27 - INFO -   Epoch: 4/20, Step: 30/255, Lr: , loss: 7.721600
+07/03/2025 15:11:30 - INFO -   Epoch: 4/20, Step: 40/255, Lr: , loss: 7.627392
+07/03/2025 15:11:32 - INFO -   Epoch: 4/20, Step: 50/255, Lr: , loss: 7.513669
+07/03/2025 15:11:34 - INFO -   Epoch: 4/20, Step: 60/255, Lr: , loss: 7.478097
+07/03/2025 15:11:36 - INFO -   Epoch: 4/20, Step: 70/255, Lr: , loss: 7.643466
+07/03/2025 15:11:39 - INFO -   Epoch: 4/20, Step: 80/255, Lr: , loss: 7.602724
+07/03/2025 15:11:41 - INFO -   Epoch: 4/20, Step: 90/255, Lr: , loss: 7.686995
+07/03/2025 15:11:43 - INFO -   Epoch: 4/20, Step: 100/255, Lr: , loss: 7.723596
+07/03/2025 15:11:45 - INFO -   Epoch: 4/20, Step: 110/255, Lr: , loss: 7.533981
+07/03/2025 15:11:48 - INFO -   Epoch: 4/20, Step: 120/255, Lr: , loss: 7.453648
+07/03/2025 15:11:50 - INFO -   Epoch: 4/20, Step: 130/255, Lr: , loss: 7.625851
+07/03/2025 15:11:52 - INFO -   Epoch: 4/20, Step: 140/255, Lr: , loss: 7.598954
+07/03/2025 15:11:54 - INFO -   Epoch: 4/20, Step: 150/255, Lr: , loss: 7.520190
+07/03/2025 15:11:57 - INFO -   Epoch: 4/20, Step: 160/255, Lr: , loss: 7.545900
+07/03/2025 15:11:59 - INFO -   Epoch: 4/20, Step: 170/255, Lr: , loss: 7.542868
+07/03/2025 15:12:01 - INFO -   Epoch: 4/20, Step: 180/255, Lr: , loss: 7.525587
+07/03/2025 15:12:03 - INFO -   Epoch: 4/20, Step: 190/255, Lr: , loss: 7.625800
+07/03/2025 15:12:06 - INFO -   Epoch: 4/20, Step: 200/255, Lr: , loss: 7.605240
+07/03/2025 15:12:08 - INFO -   Epoch: 4/20, Step: 210/255, Lr: , loss: 7.686419
+07/03/2025 15:12:10 - INFO -   Epoch: 4/20, Step: 220/255, Lr: , loss: 7.501254
+07/03/2025 15:12:12 - INFO -   Epoch: 4/20, Step: 230/255, Lr: , loss: 7.544967
+07/03/2025 15:12:15 - INFO -   Epoch: 4/20, Step: 240/255, Lr: , loss: 7.540177
+07/03/2025 15:12:17 - INFO -   Epoch: 4/20, Step: 250/255, Lr: , loss: 7.474205
+07/03/2025 15:12:18 - INFO -   Epoch 4/20 Finished, Train Loss: 7.590237.
+07/03/2025 15:12:19 - INFO -    res: f1 0.545081,	p 0.680283,	r 0.454711,	acc 0.457600.
+07/03/2025 15:12:19 - INFO -   ***** Running valing *****
+07/03/2025 15:12:19 - INFO -    res: f1 0.532393,	p 0.631621,	r 0.460110,	acc 0.447300.
+07/03/2025 15:12:19 - INFO -   Model saved to ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_3.bin.
+07/03/2025 15:12:19 - INFO -   The best model is: ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_3.bin., the f1 is: 0.5324
+07/03/2025 15:12:21 - INFO -   Epoch: 5/20, Step: 10/255, Lr: , loss: 7.529305
+07/03/2025 15:12:24 - INFO -   Epoch: 5/20, Step: 20/255, Lr: , loss: 7.429651
+07/03/2025 15:12:26 - INFO -   Epoch: 5/20, Step: 30/255, Lr: , loss: 7.515077
+07/03/2025 15:12:28 - INFO -   Epoch: 5/20, Step: 40/255, Lr: , loss: 7.516175
+07/03/2025 15:12:30 - INFO -   Epoch: 5/20, Step: 50/255, Lr: , loss: 7.556381
+07/03/2025 15:12:33 - INFO -   Epoch: 5/20, Step: 60/255, Lr: , loss: 7.454136
+07/03/2025 15:12:35 - INFO -   Epoch: 5/20, Step: 70/255, Lr: , loss: 7.482882
+07/03/2025 15:12:37 - INFO -   Epoch: 5/20, Step: 80/255, Lr: , loss: 7.596944
+07/03/2025 15:12:39 - INFO -   Epoch: 5/20, Step: 90/255, Lr: , loss: 7.611440
+07/03/2025 15:12:42 - INFO -   Epoch: 5/20, Step: 100/255, Lr: , loss: 7.377028
+07/03/2025 15:12:44 - INFO -   Epoch: 5/20, Step: 110/255, Lr: , loss: 7.481407
+07/03/2025 15:12:46 - INFO -   Epoch: 5/20, Step: 120/255, Lr: , loss: 7.477748
+07/03/2025 15:12:48 - INFO -   Epoch: 5/20, Step: 130/255, Lr: , loss: 7.572670
+07/03/2025 15:12:51 - INFO -   Epoch: 5/20, Step: 140/255, Lr: , loss: 7.509521
+07/03/2025 15:12:53 - INFO -   Epoch: 5/20, Step: 150/255, Lr: , loss: 7.560714
+07/03/2025 15:12:55 - INFO -   Epoch: 5/20, Step: 160/255, Lr: , loss: 7.496059
+07/03/2025 15:12:57 - INFO -   Epoch: 5/20, Step: 170/255, Lr: , loss: 7.533662
+07/03/2025 15:13:00 - INFO -   Epoch: 5/20, Step: 180/255, Lr: , loss: 7.552934
+07/03/2025 15:13:02 - INFO -   Epoch: 5/20, Step: 190/255, Lr: , loss: 7.528588
+07/03/2025 15:13:04 - INFO -   Epoch: 5/20, Step: 200/255, Lr: , loss: 7.564802
+07/03/2025 15:13:06 - INFO -   Epoch: 5/20, Step: 210/255, Lr: , loss: 7.462327
+07/03/2025 15:13:09 - INFO -   Epoch: 5/20, Step: 220/255, Lr: , loss: 7.416941
+07/03/2025 15:13:11 - INFO -   Epoch: 5/20, Step: 230/255, Lr: , loss: 7.603127
+07/03/2025 15:13:13 - INFO -   Epoch: 5/20, Step: 240/255, Lr: , loss: 7.411622
+07/03/2025 15:13:15 - INFO -   Epoch: 5/20, Step: 250/255, Lr: , loss: 7.542081
+07/03/2025 15:13:17 - INFO -   Epoch 5/20 Finished, Train Loss: 7.555615.
+07/03/2025 15:13:17 - INFO -    res: f1 0.552006,	p 0.676098,	r 0.466402,	acc 0.463700.
+07/03/2025 15:13:17 - INFO -   ***** Running valing *****
+07/03/2025 15:13:18 - INFO -    res: f1 0.533870,	p 0.663070,	r 0.446809,	acc 0.447400.
+07/03/2025 15:13:18 - INFO -   Model saved to ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_4.bin.
+07/03/2025 15:13:18 - INFO -   The best model is: ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_4.bin., the f1 is: 0.5339
+07/03/2025 15:13:20 - INFO -   Epoch: 6/20, Step: 10/255, Lr: , loss: 7.559676
+07/03/2025 15:13:22 - INFO -   Epoch: 6/20, Step: 20/255, Lr: , loss: 7.456799
+07/03/2025 15:13:25 - INFO -   Epoch: 6/20, Step: 30/255, Lr: , loss: 7.426324
+07/03/2025 15:13:27 - INFO -   Epoch: 6/20, Step: 40/255, Lr: , loss: 7.517636
+07/03/2025 15:13:29 - INFO -   Epoch: 6/20, Step: 50/255, Lr: , loss: 7.582838
+07/03/2025 15:13:31 - INFO -   Epoch: 6/20, Step: 60/255, Lr: , loss: 7.516078
+07/03/2025 15:13:33 - INFO -   Epoch: 6/20, Step: 70/255, Lr: , loss: 7.558580
+07/03/2025 15:13:36 - INFO -   Epoch: 6/20, Step: 80/255, Lr: , loss: 7.496896
+07/03/2025 15:13:38 - INFO -   Epoch: 6/20, Step: 90/255, Lr: , loss: 7.511114
+07/03/2025 15:13:40 - INFO -   Epoch: 6/20, Step: 100/255, Lr: , loss: 7.490612
+07/03/2025 15:13:42 - INFO -   Epoch: 6/20, Step: 110/255, Lr: , loss: 7.531329
+07/03/2025 15:13:45 - INFO -   Epoch: 6/20, Step: 120/255, Lr: , loss: 7.368321
+07/03/2025 15:13:47 - INFO -   Epoch: 6/20, Step: 130/255, Lr: , loss: 7.507409
+07/03/2025 15:13:49 - INFO -   Epoch: 6/20, Step: 140/255, Lr: , loss: 7.444164
+07/03/2025 15:13:51 - INFO -   Epoch: 6/20, Step: 150/255, Lr: , loss: 7.451604
+07/03/2025 15:13:54 - INFO -   Epoch: 6/20, Step: 160/255, Lr: , loss: 7.461124
+07/03/2025 15:13:56 - INFO -   Epoch: 6/20, Step: 170/255, Lr: , loss: 7.481486
+07/03/2025 15:13:58 - INFO -   Epoch: 6/20, Step: 180/255, Lr: , loss: 7.496313
+07/03/2025 15:14:00 - INFO -   Epoch: 6/20, Step: 190/255, Lr: , loss: 7.506050
+07/03/2025 15:14:03 - INFO -   Epoch: 6/20, Step: 200/255, Lr: , loss: 7.484196
+07/03/2025 15:14:05 - INFO -   Epoch: 6/20, Step: 210/255, Lr: , loss: 7.575740
+07/03/2025 15:14:07 - INFO -   Epoch: 6/20, Step: 220/255, Lr: , loss: 7.464658
+07/03/2025 15:14:09 - INFO -   Epoch: 6/20, Step: 230/255, Lr: , loss: 7.482974
+07/03/2025 15:14:11 - INFO -   Epoch: 6/20, Step: 240/255, Lr: , loss: 7.457251
+07/03/2025 15:14:14 - INFO -   Epoch: 6/20, Step: 250/255, Lr: , loss: 7.542636
+07/03/2025 15:14:15 - INFO -   Epoch 6/20 Finished, Train Loss: 7.528961.
+07/03/2025 15:14:15 - INFO -    res: f1 0.557237,	p 0.675311,	r 0.474307,	acc 0.467400.
+07/03/2025 15:14:15 - INFO -   ***** Running valing *****
+07/03/2025 15:14:16 - INFO -    res: f1 0.537162,	p 0.634731,	r 0.465593,	acc 0.458300.
+07/03/2025 15:14:16 - INFO -   Model saved to ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_5.bin.
+07/03/2025 15:14:16 - INFO -   The best model is: ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_5.bin., the f1 is: 0.5372
+07/03/2025 15:14:18 - INFO -   Epoch: 7/20, Step: 10/255, Lr: , loss: 7.489308
+07/03/2025 15:14:21 - INFO -   Epoch: 7/20, Step: 20/255, Lr: , loss: 7.484591
+07/03/2025 15:14:23 - INFO -   Epoch: 7/20, Step: 30/255, Lr: , loss: 7.418890
+07/03/2025 15:14:25 - INFO -   Epoch: 7/20, Step: 40/255, Lr: , loss: 7.381026
+07/03/2025 15:14:27 - INFO -   Epoch: 7/20, Step: 50/255, Lr: , loss: 7.435545
+07/03/2025 15:14:29 - INFO -   Epoch: 7/20, Step: 60/255, Lr: , loss: 7.540717
+07/03/2025 15:14:32 - INFO -   Epoch: 7/20, Step: 70/255, Lr: , loss: 7.566115
+07/03/2025 15:14:34 - INFO -   Epoch: 7/20, Step: 80/255, Lr: , loss: 7.491269
+07/03/2025 15:14:36 - INFO -   Epoch: 7/20, Step: 90/255, Lr: , loss: 7.536808
+07/03/2025 15:14:38 - INFO -   Epoch: 7/20, Step: 100/255, Lr: , loss: 7.434742
+07/03/2025 15:14:41 - INFO -   Epoch: 7/20, Step: 110/255, Lr: , loss: 7.549629
+07/03/2025 15:14:43 - INFO -   Epoch: 7/20, Step: 120/255, Lr: , loss: 7.425593
+07/03/2025 15:14:45 - INFO -   Epoch: 7/20, Step: 130/255, Lr: , loss: 7.490441
+07/03/2025 15:14:47 - INFO -   Epoch: 7/20, Step: 140/255, Lr: , loss: 7.557728
+07/03/2025 15:14:50 - INFO -   Epoch: 7/20, Step: 150/255, Lr: , loss: 7.423288
+07/03/2025 15:14:52 - INFO -   Epoch: 7/20, Step: 160/255, Lr: , loss: 7.644214
+07/03/2025 15:14:54 - INFO -   Epoch: 7/20, Step: 170/255, Lr: , loss: 7.616553
+07/03/2025 15:14:56 - INFO -   Epoch: 7/20, Step: 180/255, Lr: , loss: 7.468853
+07/03/2025 15:14:59 - INFO -   Epoch: 7/20, Step: 190/255, Lr: , loss: 7.496583
+07/03/2025 15:15:01 - INFO -   Epoch: 7/20, Step: 200/255, Lr: , loss: 7.476041
+07/03/2025 15:15:03 - INFO -   Epoch: 7/20, Step: 210/255, Lr: , loss: 7.458212
+07/03/2025 15:15:05 - INFO -   Epoch: 7/20, Step: 220/255, Lr: , loss: 7.417022
+07/03/2025 15:15:08 - INFO -   Epoch: 7/20, Step: 230/255, Lr: , loss: 7.551965
+07/03/2025 15:15:10 - INFO -   Epoch: 7/20, Step: 240/255, Lr: , loss: 7.424888
+07/03/2025 15:15:12 - INFO -   Epoch: 7/20, Step: 250/255, Lr: , loss: 7.329064
+07/03/2025 15:15:13 - INFO -   Epoch 7/20 Finished, Train Loss: 7.507879.
+07/03/2025 15:15:14 - INFO -    res: f1 0.560913,	p 0.675446,	r 0.479591,	acc 0.470900.
+07/03/2025 15:15:14 - INFO -   ***** Running valing *****
+07/03/2025 15:15:15 - INFO -    res: f1 0.536089,	p 0.663204,	r 0.449864,	acc 0.438100.
+07/03/2025 15:15:15 - INFO -   Model saved to ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_6.bin.
+07/03/2025 15:15:15 - INFO -   The best model is: ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_5.bin., the f1 is: 0.5372
+07/03/2025 15:15:17 - INFO -   Epoch: 8/20, Step: 10/255, Lr: , loss: 7.440286
+07/03/2025 15:15:19 - INFO -   Epoch: 8/20, Step: 20/255, Lr: , loss: 7.374948
+07/03/2025 15:15:21 - INFO -   Epoch: 8/20, Step: 30/255, Lr: , loss: 7.551599
+07/03/2025 15:15:24 - INFO -   Epoch: 8/20, Step: 40/255, Lr: , loss: 7.450445
+07/03/2025 15:15:26 - INFO -   Epoch: 8/20, Step: 50/255, Lr: , loss: 7.413152
+07/03/2025 15:15:28 - INFO -   Epoch: 8/20, Step: 60/255, Lr: , loss: 7.482343
+07/03/2025 15:15:30 - INFO -   Epoch: 8/20, Step: 70/255, Lr: , loss: 7.444517
+07/03/2025 15:15:33 - INFO -   Epoch: 8/20, Step: 80/255, Lr: , loss: 7.478694
+07/03/2025 15:15:35 - INFO -   Epoch: 8/20, Step: 90/255, Lr: , loss: 7.403987
+07/03/2025 15:15:37 - INFO -   Epoch: 8/20, Step: 100/255, Lr: , loss: 7.618441
+07/03/2025 15:15:39 - INFO -   Epoch: 8/20, Step: 110/255, Lr: , loss: 7.469998
+07/03/2025 15:15:42 - INFO -   Epoch: 8/20, Step: 120/255, Lr: , loss: 7.506289
+07/03/2025 15:15:44 - INFO -   Epoch: 8/20, Step: 130/255, Lr: , loss: 7.338924
+07/03/2025 15:15:46 - INFO -   Epoch: 8/20, Step: 140/255, Lr: , loss: 7.572788
+07/03/2025 15:15:48 - INFO -   Epoch: 8/20, Step: 150/255, Lr: , loss: 7.422592
+07/03/2025 15:15:51 - INFO -   Epoch: 8/20, Step: 160/255, Lr: , loss: 7.442996
+07/03/2025 15:15:53 - INFO -   Epoch: 8/20, Step: 170/255, Lr: , loss: 7.476439
+07/03/2025 15:15:55 - INFO -   Epoch: 8/20, Step: 180/255, Lr: , loss: 7.535296
+07/03/2025 15:15:57 - INFO -   Epoch: 8/20, Step: 190/255, Lr: , loss: 7.534140
+07/03/2025 15:16:00 - INFO -   Epoch: 8/20, Step: 200/255, Lr: , loss: 7.281020
+07/03/2025 15:16:02 - INFO -   Epoch: 8/20, Step: 210/255, Lr: , loss: 7.509446
+07/03/2025 15:16:04 - INFO -   Epoch: 8/20, Step: 220/255, Lr: , loss: 7.467735
+07/03/2025 15:16:06 - INFO -   Epoch: 8/20, Step: 230/255, Lr: , loss: 7.444969
+07/03/2025 15:16:09 - INFO -   Epoch: 8/20, Step: 240/255, Lr: , loss: 7.467976
+07/03/2025 15:16:11 - INFO -   Epoch: 8/20, Step: 250/255, Lr: , loss: 7.501621
+07/03/2025 15:16:12 - INFO -   Epoch 8/20 Finished, Train Loss: 7.492357.
+07/03/2025 15:16:13 - INFO -    res: f1 0.566116,	p 0.678129,	r 0.485862,	acc 0.476200.
+07/03/2025 15:16:13 - INFO -   ***** Running valing *****
+07/03/2025 15:16:13 - INFO -    res: f1 0.538263,	p 0.624252,	r 0.473096,	acc 0.451000.
+07/03/2025 15:16:13 - INFO -   Model saved to ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_7.bin.
+07/03/2025 15:16:13 - INFO -   The best model is: ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_7.bin., the f1 is: 0.5383
+07/03/2025 15:16:16 - INFO -   Epoch: 9/20, Step: 10/255, Lr: , loss: 7.451575
+07/03/2025 15:16:18 - INFO -   Epoch: 9/20, Step: 20/255, Lr: , loss: 7.429619
+07/03/2025 15:16:20 - INFO -   Epoch: 9/20, Step: 30/255, Lr: , loss: 7.557826
+07/03/2025 15:16:22 - INFO -   Epoch: 9/20, Step: 40/255, Lr: , loss: 7.430298
+07/03/2025 15:16:25 - INFO -   Epoch: 9/20, Step: 50/255, Lr: , loss: 7.453949
+07/03/2025 15:16:27 - INFO -   Epoch: 9/20, Step: 60/255, Lr: , loss: 7.478635
+07/03/2025 15:16:29 - INFO -   Epoch: 9/20, Step: 70/255, Lr: , loss: 7.449769
+07/03/2025 15:16:31 - INFO -   Epoch: 9/20, Step: 80/255, Lr: , loss: 7.377767
+07/03/2025 15:16:33 - INFO -   Epoch: 9/20, Step: 90/255, Lr: , loss: 7.401205
+07/03/2025 15:16:36 - INFO -   Epoch: 9/20, Step: 100/255, Lr: , loss: 7.546256
+07/03/2025 15:16:38 - INFO -   Epoch: 9/20, Step: 110/255, Lr: , loss: 7.429167
+07/03/2025 15:16:40 - INFO -   Epoch: 9/20, Step: 120/255, Lr: , loss: 7.480225
+07/03/2025 15:16:43 - INFO -   Epoch: 9/20, Step: 130/255, Lr: , loss: 7.460503
+07/03/2025 15:16:45 - INFO -   Epoch: 9/20, Step: 140/255, Lr: , loss: 7.403703
+07/03/2025 15:16:47 - INFO -   Epoch: 9/20, Step: 150/255, Lr: , loss: 7.380139
+07/03/2025 15:16:49 - INFO -   Epoch: 9/20, Step: 160/255, Lr: , loss: 7.435952
+07/03/2025 15:16:52 - INFO -   Epoch: 9/20, Step: 170/255, Lr: , loss: 7.495656
+07/03/2025 15:16:54 - INFO -   Epoch: 9/20, Step: 180/255, Lr: , loss: 7.536479
+07/03/2025 15:16:56 - INFO -   Epoch: 9/20, Step: 190/255, Lr: , loss: 7.556405
+07/03/2025 15:16:58 - INFO -   Epoch: 9/20, Step: 200/255, Lr: , loss: 7.617165
+07/03/2025 15:17:01 - INFO -   Epoch: 9/20, Step: 210/255, Lr: , loss: 7.563723
+07/03/2025 15:17:03 - INFO -   Epoch: 9/20, Step: 220/255, Lr: , loss: 7.490623
+07/03/2025 15:17:05 - INFO -   Epoch: 9/20, Step: 230/255, Lr: , loss: 7.510250
+07/03/2025 15:17:07 - INFO -   Epoch: 9/20, Step: 240/255, Lr: , loss: 7.423067
+07/03/2025 15:17:10 - INFO -   Epoch: 9/20, Step: 250/255, Lr: , loss: 7.479161
+07/03/2025 15:17:11 - INFO -   Epoch 9/20 Finished, Train Loss: 7.480162.
+07/03/2025 15:17:11 - INFO -    res: f1 0.569644,	p 0.682377,	r 0.488878,	acc 0.478100.
+07/03/2025 15:17:11 - INFO -   ***** Running valing *****
+07/03/2025 15:17:12 - INFO -    res: f1 0.545358,	p 0.616800,	r 0.488748,	acc 0.456300.
+07/03/2025 15:17:12 - INFO -   Model saved to ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_8.bin.
+07/03/2025 15:17:12 - INFO -   The best model is: ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_8.bin., the f1 is: 0.5454
+07/03/2025 15:17:14 - INFO -   Epoch: 10/20, Step: 10/255, Lr: , loss: 7.502853
+07/03/2025 15:17:17 - INFO -   Epoch: 10/20, Step: 20/255, Lr: , loss: 7.455796
+07/03/2025 15:17:19 - INFO -   Epoch: 10/20, Step: 30/255, Lr: , loss: 7.472072
+07/03/2025 15:17:21 - INFO -   Epoch: 10/20, Step: 40/255, Lr: , loss: 7.378307
+07/03/2025 15:17:23 - INFO -   Epoch: 10/20, Step: 50/255, Lr: , loss: 7.442551
+07/03/2025 15:17:26 - INFO -   Epoch: 10/20, Step: 60/255, Lr: , loss: 7.438825
+07/03/2025 15:17:28 - INFO -   Epoch: 10/20, Step: 70/255, Lr: , loss: 7.405567
+07/03/2025 15:17:30 - INFO -   Epoch: 10/20, Step: 80/255, Lr: , loss: 7.399439
+07/03/2025 15:17:32 - INFO -   Epoch: 10/20, Step: 90/255, Lr: , loss: 7.461295
+07/03/2025 15:17:34 - INFO -   Epoch: 10/20, Step: 100/255, Lr: , loss: 7.415454
+07/03/2025 15:17:37 - INFO -   Epoch: 10/20, Step: 110/255, Lr: , loss: 7.417446
+07/03/2025 15:17:39 - INFO -   Epoch: 10/20, Step: 120/255, Lr: , loss: 7.478802
+07/03/2025 15:17:41 - INFO -   Epoch: 10/20, Step: 130/255, Lr: , loss: 7.563035
+07/03/2025 15:17:44 - INFO -   Epoch: 10/20, Step: 140/255, Lr: , loss: 7.393835
+07/03/2025 15:17:46 - INFO -   Epoch: 10/20, Step: 150/255, Lr: , loss: 7.423869
+07/03/2025 15:17:48 - INFO -   Epoch: 10/20, Step: 160/255, Lr: , loss: 7.572648
+07/03/2025 15:17:50 - INFO -   Epoch: 10/20, Step: 170/255, Lr: , loss: 7.491232
+07/03/2025 15:17:53 - INFO -   Epoch: 10/20, Step: 180/255, Lr: , loss: 7.552405
+07/03/2025 15:17:55 - INFO -   Epoch: 10/20, Step: 190/255, Lr: , loss: 7.432478
+07/03/2025 15:17:57 - INFO -   Epoch: 10/20, Step: 200/255, Lr: , loss: 7.443330
+07/03/2025 15:17:59 - INFO -   Epoch: 10/20, Step: 210/255, Lr: , loss: 7.511009
+07/03/2025 15:18:02 - INFO -   Epoch: 10/20, Step: 220/255, Lr: , loss: 7.464952
+07/03/2025 15:18:04 - INFO -   Epoch: 10/20, Step: 230/255, Lr: , loss: 7.430076
+07/03/2025 15:18:06 - INFO -   Epoch: 10/20, Step: 240/255, Lr: , loss: 7.586134
+07/03/2025 15:18:08 - INFO -   Epoch: 10/20, Step: 250/255, Lr: , loss: 7.504424
+07/03/2025 15:18:09 - INFO -   Epoch 10/20 Finished, Train Loss: 7.468861.
+07/03/2025 15:18:10 - INFO -    res: f1 0.573829,	p 0.684604,	r 0.493910,	acc 0.482100.
+07/03/2025 15:18:10 - INFO -   ***** Running valing *****
+07/03/2025 15:18:11 - INFO -    res: f1 0.542000,	p 0.608696,	r 0.488476,	acc 0.456600.
+07/03/2025 15:18:11 - INFO -   Model saved to ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_9.bin.
+07/03/2025 15:18:11 - INFO -   The best model is: ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_8.bin., the f1 is: 0.5454
+07/03/2025 15:18:13 - INFO -   Epoch: 11/20, Step: 10/255, Lr: , loss: 7.509708
+07/03/2025 15:18:15 - INFO -   Epoch: 11/20, Step: 20/255, Lr: , loss: 7.455854
+07/03/2025 15:18:17 - INFO -   Epoch: 11/20, Step: 30/255, Lr: , loss: 7.538715
+07/03/2025 15:18:20 - INFO -   Epoch: 11/20, Step: 40/255, Lr: , loss: 7.407914
+07/03/2025 15:18:22 - INFO -   Epoch: 11/20, Step: 50/255, Lr: , loss: 7.462275
+07/03/2025 15:18:24 - INFO -   Epoch: 11/20, Step: 60/255, Lr: , loss: 7.546069
+07/03/2025 15:18:26 - INFO -   Epoch: 11/20, Step: 70/255, Lr: , loss: 7.314955
+07/03/2025 15:18:29 - INFO -   Epoch: 11/20, Step: 80/255, Lr: , loss: 7.429929
+07/03/2025 15:18:31 - INFO -   Epoch: 11/20, Step: 90/255, Lr: , loss: 7.410643
+07/03/2025 15:18:33 - INFO -   Epoch: 11/20, Step: 100/255, Lr: , loss: 7.567759
+07/03/2025 15:18:35 - INFO -   Epoch: 11/20, Step: 110/255, Lr: , loss: 7.509916
+07/03/2025 15:18:38 - INFO -   Epoch: 11/20, Step: 120/255, Lr: , loss: 7.455136
+07/03/2025 15:18:40 - INFO -   Epoch: 11/20, Step: 130/255, Lr: , loss: 7.454581
+07/03/2025 15:18:42 - INFO -   Epoch: 11/20, Step: 140/255, Lr: , loss: 7.489008
+07/03/2025 15:18:44 - INFO -   Epoch: 11/20, Step: 150/255, Lr: , loss: 7.512329
+07/03/2025 15:18:47 - INFO -   Epoch: 11/20, Step: 160/255, Lr: , loss: 7.447865
+07/03/2025 15:18:49 - INFO -   Epoch: 11/20, Step: 170/255, Lr: , loss: 7.393357
+07/03/2025 15:18:51 - INFO -   Epoch: 11/20, Step: 180/255, Lr: , loss: 7.550570
+07/03/2025 15:18:54 - INFO -   Epoch: 11/20, Step: 190/255, Lr: , loss: 7.482065
+07/03/2025 15:18:56 - INFO -   Epoch: 11/20, Step: 200/255, Lr: , loss: 7.472364
+07/03/2025 15:18:58 - INFO -   Epoch: 11/20, Step: 210/255, Lr: , loss: 7.371164
+07/03/2025 15:19:00 - INFO -   Epoch: 11/20, Step: 220/255, Lr: , loss: 7.410291
+07/03/2025 15:19:03 - INFO -   Epoch: 11/20, Step: 230/255, Lr: , loss: 7.438546
+07/03/2025 15:19:05 - INFO -   Epoch: 11/20, Step: 240/255, Lr: , loss: 7.460111
+07/03/2025 15:19:07 - INFO -   Epoch: 11/20, Step: 250/255, Lr: , loss: 7.452307
+07/03/2025 15:19:08 - INFO -   Epoch 11/20 Finished, Train Loss: 7.464081.
+07/03/2025 15:19:09 - INFO -    res: f1 0.574357,	p 0.686628,	r 0.493641,	acc 0.480200.
+07/03/2025 15:19:09 - INFO -   ***** Running valing *****
+07/03/2025 15:19:09 - INFO -    res: f1 0.550248,	p 0.641261,	r 0.481859,	acc 0.458600.
+07/03/2025 15:19:09 - INFO -   Model saved to ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_10.bin.
+07/03/2025 15:19:09 - INFO -   The best model is: ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_10.bin., the f1 is: 0.5502
+07/03/2025 15:19:12 - INFO -   Epoch: 12/20, Step: 10/255, Lr: , loss: 7.425890
+07/03/2025 15:19:14 - INFO -   Epoch: 12/20, Step: 20/255, Lr: , loss: 7.325091
+07/03/2025 15:19:16 - INFO -   Epoch: 12/20, Step: 30/255, Lr: , loss: 7.367875
+07/03/2025 15:19:18 - INFO -   Epoch: 12/20, Step: 40/255, Lr: , loss: 7.531698
+07/03/2025 15:19:21 - INFO -   Epoch: 12/20, Step: 50/255, Lr: , loss: 7.452193
+07/03/2025 15:19:23 - INFO -   Epoch: 12/20, Step: 60/255, Lr: , loss: 7.508376
+07/03/2025 15:19:25 - INFO -   Epoch: 12/20, Step: 70/255, Lr: , loss: 7.373233
+07/03/2025 15:19:27 - INFO -   Epoch: 12/20, Step: 80/255, Lr: , loss: 7.462185
+07/03/2025 15:19:30 - INFO -   Epoch: 12/20, Step: 90/255, Lr: , loss: 7.274461
+07/03/2025 15:19:32 - INFO -   Epoch: 12/20, Step: 100/255, Lr: , loss: 7.556289
+07/03/2025 15:19:34 - INFO -   Epoch: 12/20, Step: 110/255, Lr: , loss: 7.436195
+07/03/2025 15:19:37 - INFO -   Epoch: 12/20, Step: 120/255, Lr: , loss: 7.392470
+07/03/2025 15:19:39 - INFO -   Epoch: 12/20, Step: 130/255, Lr: , loss: 7.494365
+07/03/2025 15:19:41 - INFO -   Epoch: 12/20, Step: 140/255, Lr: , loss: 7.644826
+07/03/2025 15:19:43 - INFO -   Epoch: 12/20, Step: 150/255, Lr: , loss: 7.330003
+07/03/2025 15:19:46 - INFO -   Epoch: 12/20, Step: 160/255, Lr: , loss: 7.504234
+07/03/2025 15:19:48 - INFO -   Epoch: 12/20, Step: 170/255, Lr: , loss: 7.453020
+07/03/2025 15:19:50 - INFO -   Epoch: 12/20, Step: 180/255, Lr: , loss: 7.348614
+07/03/2025 15:19:52 - INFO -   Epoch: 12/20, Step: 190/255, Lr: , loss: 7.461515
+07/03/2025 15:19:55 - INFO -   Epoch: 12/20, Step: 200/255, Lr: , loss: 7.452611
+07/03/2025 15:19:57 - INFO -   Epoch: 12/20, Step: 210/255, Lr: , loss: 7.636961
+07/03/2025 15:19:59 - INFO -   Epoch: 12/20, Step: 220/255, Lr: , loss: 7.348363
+07/03/2025 15:20:01 - INFO -   Epoch: 12/20, Step: 230/255, Lr: , loss: 7.470249
+07/03/2025 15:20:04 - INFO -   Epoch: 12/20, Step: 240/255, Lr: , loss: 7.446971
+07/03/2025 15:20:06 - INFO -   Epoch: 12/20, Step: 250/255, Lr: , loss: 7.582836
+07/03/2025 15:20:07 - INFO -   Epoch 12/20 Finished, Train Loss: 7.452705.
+07/03/2025 15:20:08 - INFO -    res: f1 0.580431,	p 0.690745,	r 0.500500,	acc 0.485800.
+07/03/2025 15:20:08 - INFO -   ***** Running valing *****
+07/03/2025 15:20:08 - INFO -    res: f1 0.544799,	p 0.633533,	r 0.477868,	acc 0.454200.
+07/03/2025 15:20:08 - INFO -   Model saved to ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_11.bin.
+07/03/2025 15:20:08 - INFO -   The best model is: ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_10.bin., the f1 is: 0.5502
+07/03/2025 15:20:10 - INFO -   Epoch: 13/20, Step: 10/255, Lr: , loss: 7.491840
+07/03/2025 15:20:13 - INFO -   Epoch: 13/20, Step: 20/255, Lr: , loss: 7.495648
+07/03/2025 15:20:15 - INFO -   Epoch: 13/20, Step: 30/255, Lr: , loss: 7.337580
+07/03/2025 15:20:17 - INFO -   Epoch: 13/20, Step: 40/255, Lr: , loss: 7.374590
+07/03/2025 15:20:19 - INFO -   Epoch: 13/20, Step: 50/255, Lr: , loss: 7.489249
+07/03/2025 15:20:22 - INFO -   Epoch: 13/20, Step: 60/255, Lr: , loss: 7.532802
+07/03/2025 15:20:24 - INFO -   Epoch: 13/20, Step: 70/255, Lr: , loss: 7.405769
+07/03/2025 15:20:26 - INFO -   Epoch: 13/20, Step: 80/255, Lr: , loss: 7.492141
+07/03/2025 15:20:29 - INFO -   Epoch: 13/20, Step: 90/255, Lr: , loss: 7.440233
+07/03/2025 15:20:31 - INFO -   Epoch: 13/20, Step: 100/255, Lr: , loss: 7.360878
+07/03/2025 15:20:33 - INFO -   Epoch: 13/20, Step: 110/255, Lr: , loss: 7.588082
+07/03/2025 15:20:35 - INFO -   Epoch: 13/20, Step: 120/255, Lr: , loss: 7.415965
+07/03/2025 15:20:38 - INFO -   Epoch: 13/20, Step: 130/255, Lr: , loss: 7.504446
+07/03/2025 15:20:40 - INFO -   Epoch: 13/20, Step: 140/255, Lr: , loss: 7.443769
+07/03/2025 15:20:42 - INFO -   Epoch: 13/20, Step: 150/255, Lr: , loss: 7.523433
+07/03/2025 15:20:44 - INFO -   Epoch: 13/20, Step: 160/255, Lr: , loss: 7.389421
+07/03/2025 15:20:47 - INFO -   Epoch: 13/20, Step: 170/255, Lr: , loss: 7.257732
+07/03/2025 15:20:49 - INFO -   Epoch: 13/20, Step: 180/255, Lr: , loss: 7.371952
+07/03/2025 15:20:51 - INFO -   Epoch: 13/20, Step: 190/255, Lr: , loss: 7.283175
+07/03/2025 15:20:53 - INFO -   Epoch: 13/20, Step: 200/255, Lr: , loss: 7.427207
+07/03/2025 15:20:56 - INFO -   Epoch: 13/20, Step: 210/255, Lr: , loss: 7.422366
+07/03/2025 15:20:58 - INFO -   Epoch: 13/20, Step: 220/255, Lr: , loss: 7.449322
+07/03/2025 15:21:00 - INFO -   Epoch: 13/20, Step: 230/255, Lr: , loss: 7.430566
+07/03/2025 15:21:02 - INFO -   Epoch: 13/20, Step: 240/255, Lr: , loss: 7.473208
+07/03/2025 15:21:05 - INFO -   Epoch: 13/20, Step: 250/255, Lr: , loss: 7.508685
+07/03/2025 15:21:06 - INFO -   Epoch 13/20 Finished, Train Loss: 7.444409.
+07/03/2025 15:21:06 - INFO -    res: f1 0.580968,	p 0.691156,	r 0.501082,	acc 0.486500.
+07/03/2025 15:21:06 - INFO -   ***** Running valing *****
+07/03/2025 15:21:07 - INFO -    res: f1 0.547241,	p 0.612800,	r 0.494353,	acc 0.458300.
+07/03/2025 15:21:07 - INFO -   Model saved to ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_12.bin.
+07/03/2025 15:21:07 - INFO -   The best model is: ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_10.bin., the f1 is: 0.5502
+07/03/2025 15:21:09 - INFO -   Epoch: 14/20, Step: 10/255, Lr: , loss: 7.378878
+07/03/2025 15:21:12 - INFO -   Epoch: 14/20, Step: 20/255, Lr: , loss: 7.471986
+07/03/2025 15:21:14 - INFO -   Epoch: 14/20, Step: 30/255, Lr: , loss: 7.393436
+07/03/2025 15:21:16 - INFO -   Epoch: 14/20, Step: 40/255, Lr: , loss: 7.514775
+07/03/2025 15:21:18 - INFO -   Epoch: 14/20, Step: 50/255, Lr: , loss: 7.375807
+07/03/2025 15:21:21 - INFO -   Epoch: 14/20, Step: 60/255, Lr: , loss: 7.328245
+07/03/2025 15:21:23 - INFO -   Epoch: 14/20, Step: 70/255, Lr: , loss: 7.452866
+07/03/2025 15:21:25 - INFO -   Epoch: 14/20, Step: 80/255, Lr: , loss: 7.535378
+07/03/2025 15:21:27 - INFO -   Epoch: 14/20, Step: 90/255, Lr: , loss: 7.341681
+07/03/2025 15:21:30 - INFO -   Epoch: 14/20, Step: 100/255, Lr: , loss: 7.467762
+07/03/2025 15:21:32 - INFO -   Epoch: 14/20, Step: 110/255, Lr: , loss: 7.293979
+07/03/2025 15:21:34 - INFO -   Epoch: 14/20, Step: 120/255, Lr: , loss: 7.387457
+07/03/2025 15:21:36 - INFO -   Epoch: 14/20, Step: 130/255, Lr: , loss: 7.464857
+07/03/2025 15:21:39 - INFO -   Epoch: 14/20, Step: 140/255, Lr: , loss: 7.436543
+07/03/2025 15:21:41 - INFO -   Epoch: 14/20, Step: 150/255, Lr: , loss: 7.552027
+07/03/2025 15:21:43 - INFO -   Epoch: 14/20, Step: 160/255, Lr: , loss: 7.435396
+07/03/2025 15:21:46 - INFO -   Epoch: 14/20, Step: 170/255, Lr: , loss: 7.457448
+07/03/2025 15:21:48 - INFO -   Epoch: 14/20, Step: 180/255, Lr: , loss: 7.417173
+07/03/2025 15:21:50 - INFO -   Epoch: 14/20, Step: 190/255, Lr: , loss: 7.361113
+07/03/2025 15:21:52 - INFO -   Epoch: 14/20, Step: 200/255, Lr: , loss: 7.470721
+07/03/2025 15:21:55 - INFO -   Epoch: 14/20, Step: 210/255, Lr: , loss: 7.417000
+07/03/2025 15:21:57 - INFO -   Epoch: 14/20, Step: 220/255, Lr: , loss: 7.455125
+07/03/2025 15:21:59 - INFO -   Epoch: 14/20, Step: 230/255, Lr: , loss: 7.439243
+07/03/2025 15:22:01 - INFO -   Epoch: 14/20, Step: 240/255, Lr: , loss: 7.446522
+07/03/2025 15:22:04 - INFO -   Epoch: 14/20, Step: 250/255, Lr: , loss: 7.412901
+07/03/2025 15:22:05 - INFO -   Epoch 14/20 Finished, Train Loss: 7.441251.
+07/03/2025 15:22:05 - INFO -    res: f1 0.583208,	p 0.691317,	r 0.504339,	acc 0.487800.
+07/03/2025 15:22:05 - INFO -   ***** Running valing *****
+07/03/2025 15:22:06 - INFO -    res: f1 0.542828,	p 0.638034,	r 0.472345,	acc 0.452100.
+07/03/2025 15:22:06 - INFO -   Model saved to ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_13.bin.
+07/03/2025 15:22:06 - INFO -   The best model is: ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_10.bin., the f1 is: 0.5502
+07/03/2025 15:22:08 - INFO -   Epoch: 15/20, Step: 10/255, Lr: , loss: 7.330126
+07/03/2025 15:22:11 - INFO -   Epoch: 15/20, Step: 20/255, Lr: , loss: 7.447997
+07/03/2025 15:22:13 - INFO -   Epoch: 15/20, Step: 30/255, Lr: , loss: 7.503410
+07/03/2025 15:22:15 - INFO -   Epoch: 15/20, Step: 40/255, Lr: , loss: 7.437551
+07/03/2025 15:22:17 - INFO -   Epoch: 15/20, Step: 50/255, Lr: , loss: 7.454155
+07/03/2025 15:22:20 - INFO -   Epoch: 15/20, Step: 60/255, Lr: , loss: 7.330827
+07/03/2025 15:22:22 - INFO -   Epoch: 15/20, Step: 70/255, Lr: , loss: 7.432261
+07/03/2025 15:22:24 - INFO -   Epoch: 15/20, Step: 80/255, Lr: , loss: 7.486271
+07/03/2025 15:22:26 - INFO -   Epoch: 15/20, Step: 90/255, Lr: , loss: 7.562257
+07/03/2025 15:22:29 - INFO -   Epoch: 15/20, Step: 100/255, Lr: , loss: 7.547661
+07/03/2025 15:22:31 - INFO -   Epoch: 15/20, Step: 110/255, Lr: , loss: 7.324907
+07/03/2025 15:22:33 - INFO -   Epoch: 15/20, Step: 120/255, Lr: , loss: 7.386561
+07/03/2025 15:22:35 - INFO -   Epoch: 15/20, Step: 130/255, Lr: , loss: 7.389445
+07/03/2025 15:22:38 - INFO -   Epoch: 15/20, Step: 140/255, Lr: , loss: 7.470094
+07/03/2025 15:22:40 - INFO -   Epoch: 15/20, Step: 150/255, Lr: , loss: 7.337255
+07/03/2025 15:22:42 - INFO -   Epoch: 15/20, Step: 160/255, Lr: , loss: 7.495393
+07/03/2025 15:22:44 - INFO -   Epoch: 15/20, Step: 170/255, Lr: , loss: 7.373824
+07/03/2025 15:22:47 - INFO -   Epoch: 15/20, Step: 180/255, Lr: , loss: 7.466559
+07/03/2025 15:22:49 - INFO -   Epoch: 15/20, Step: 190/255, Lr: , loss: 7.302532
+07/03/2025 15:22:51 - INFO -   Epoch: 15/20, Step: 200/255, Lr: , loss: 7.557242
+07/03/2025 15:22:53 - INFO -   Epoch: 15/20, Step: 210/255, Lr: , loss: 7.265539
+07/03/2025 15:22:56 - INFO -   Epoch: 15/20, Step: 220/255, Lr: , loss: 7.423834
+07/03/2025 15:22:58 - INFO -   Epoch: 15/20, Step: 230/255, Lr: , loss: 7.473180
+07/03/2025 15:23:00 - INFO -   Epoch: 15/20, Step: 240/255, Lr: , loss: 7.441876
+07/03/2025 15:23:03 - INFO -   Epoch: 15/20, Step: 250/255, Lr: , loss: 7.387105
+07/03/2025 15:23:04 - INFO -   Epoch 15/20 Finished, Train Loss: 7.434376.
+07/03/2025 15:23:04 - INFO -    res: f1 0.586158,	p 0.695790,	r 0.506371,	acc 0.491100.
+07/03/2025 15:23:04 - INFO -   ***** Running valing *****
+07/03/2025 15:23:05 - INFO -    res: f1 0.546190,	p 0.621297,	r 0.487284,	acc 0.455800.
+07/03/2025 15:23:05 - INFO -   Model saved to ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_14.bin.
+07/03/2025 15:23:05 - INFO -   The best model is: ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_10.bin., the f1 is: 0.5502
+07/03/2025 15:23:07 - INFO -   Epoch: 16/20, Step: 10/255, Lr: , loss: 7.475435
+07/03/2025 15:23:09 - INFO -   Epoch: 16/20, Step: 20/255, Lr: , loss: 7.417060
+07/03/2025 15:23:12 - INFO -   Epoch: 16/20, Step: 30/255, Lr: , loss: 7.432260
+07/03/2025 15:23:14 - INFO -   Epoch: 16/20, Step: 40/255, Lr: , loss: 7.480721
+07/03/2025 15:23:16 - INFO -   Epoch: 16/20, Step: 50/255, Lr: , loss: 7.459520
+07/03/2025 15:23:18 - INFO -   Epoch: 16/20, Step: 60/255, Lr: , loss: 7.441568
+07/03/2025 15:23:21 - INFO -   Epoch: 16/20, Step: 70/255, Lr: , loss: 7.376407
+07/03/2025 15:23:23 - INFO -   Epoch: 16/20, Step: 80/255, Lr: , loss: 7.476272
+07/03/2025 15:23:25 - INFO -   Epoch: 16/20, Step: 90/255, Lr: , loss: 7.419536
+07/03/2025 15:23:27 - INFO -   Epoch: 16/20, Step: 100/255, Lr: , loss: 7.446795
+07/03/2025 15:23:30 - INFO -   Epoch: 16/20, Step: 110/255, Lr: , loss: 7.408968
+07/03/2025 15:23:32 - INFO -   Epoch: 16/20, Step: 120/255, Lr: , loss: 7.393640
+07/03/2025 15:23:34 - INFO -   Epoch: 16/20, Step: 130/255, Lr: , loss: 7.418559
+07/03/2025 15:23:36 - INFO -   Epoch: 16/20, Step: 140/255, Lr: , loss: 7.325053
+07/03/2025 15:23:39 - INFO -   Epoch: 16/20, Step: 150/255, Lr: , loss: 7.304742
+07/03/2025 15:23:41 - INFO -   Epoch: 16/20, Step: 160/255, Lr: , loss: 7.427148
+07/03/2025 15:23:43 - INFO -   Epoch: 16/20, Step: 170/255, Lr: , loss: 7.586449
+07/03/2025 15:23:45 - INFO -   Epoch: 16/20, Step: 180/255, Lr: , loss: 7.398382
+07/03/2025 15:23:48 - INFO -   Epoch: 16/20, Step: 190/255, Lr: , loss: 7.469525
+07/03/2025 15:23:50 - INFO -   Epoch: 16/20, Step: 200/255, Lr: , loss: 7.412170
+07/03/2025 15:23:52 - INFO -   Epoch: 16/20, Step: 210/255, Lr: , loss: 7.601591
+07/03/2025 15:23:55 - INFO -   Epoch: 16/20, Step: 220/255, Lr: , loss: 7.473888
+07/03/2025 15:23:57 - INFO -   Epoch: 16/20, Step: 230/255, Lr: , loss: 7.441775
+07/03/2025 15:23:59 - INFO -   Epoch: 16/20, Step: 240/255, Lr: , loss: 7.453473
+07/03/2025 15:24:01 - INFO -   Epoch: 16/20, Step: 250/255, Lr: , loss: 7.435966
+07/03/2025 15:24:02 - INFO -   Epoch 16/20 Finished, Train Loss: 7.427364.
+07/03/2025 15:24:03 - INFO -    res: f1 0.590092,	p 0.699033,	r 0.510528,	acc 0.493300.
+07/03/2025 15:24:03 - INFO -   ***** Running valing *****
+07/03/2025 15:24:04 - INFO -    res: f1 0.547669,	p 0.618915,	r 0.491134,	acc 0.459400.
+07/03/2025 15:24:04 - INFO -   Model saved to ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_15.bin.
+07/03/2025 15:24:04 - INFO -   The best model is: ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_10.bin., the f1 is: 0.5502
+07/03/2025 15:24:06 - INFO -   Epoch: 17/20, Step: 10/255, Lr: , loss: 7.528625
+07/03/2025 15:24:08 - INFO -   Epoch: 17/20, Step: 20/255, Lr: , loss: 7.433749
+07/03/2025 15:24:10 - INFO -   Epoch: 17/20, Step: 30/255, Lr: , loss: 7.424519
+07/03/2025 15:24:13 - INFO -   Epoch: 17/20, Step: 40/255, Lr: , loss: 7.505832
+07/03/2025 15:24:15 - INFO -   Epoch: 17/20, Step: 50/255, Lr: , loss: 7.368811
+07/03/2025 15:24:17 - INFO -   Epoch: 17/20, Step: 60/255, Lr: , loss: 7.535406
+07/03/2025 15:24:19 - INFO -   Epoch: 17/20, Step: 70/255, Lr: , loss: 7.523284
+07/03/2025 15:24:22 - INFO -   Epoch: 17/20, Step: 80/255, Lr: , loss: 7.355155
+07/03/2025 15:24:24 - INFO -   Epoch: 17/20, Step: 90/255, Lr: , loss: 7.538908
+07/03/2025 15:24:26 - INFO -   Epoch: 17/20, Step: 100/255, Lr: , loss: 7.341842
+07/03/2025 15:24:28 - INFO -   Epoch: 17/20, Step: 110/255, Lr: , loss: 7.448034
+07/03/2025 15:24:31 - INFO -   Epoch: 17/20, Step: 120/255, Lr: , loss: 7.608479
+07/03/2025 15:24:33 - INFO -   Epoch: 17/20, Step: 130/255, Lr: , loss: 7.421000
+07/03/2025 15:24:35 - INFO -   Epoch: 17/20, Step: 140/255, Lr: , loss: 7.252656
+07/03/2025 15:24:37 - INFO -   Epoch: 17/20, Step: 150/255, Lr: , loss: 7.281806
+07/03/2025 15:24:40 - INFO -   Epoch: 17/20, Step: 160/255, Lr: , loss: 7.445963
+07/03/2025 15:24:42 - INFO -   Epoch: 17/20, Step: 170/255, Lr: , loss: 7.500524
+07/03/2025 15:24:44 - INFO -   Epoch: 17/20, Step: 180/255, Lr: , loss: 7.390182
+07/03/2025 15:24:46 - INFO -   Epoch: 17/20, Step: 190/255, Lr: , loss: 7.324885
+07/03/2025 15:24:49 - INFO -   Epoch: 17/20, Step: 200/255, Lr: , loss: 7.526381
+07/03/2025 15:24:51 - INFO -   Epoch: 17/20, Step: 210/255, Lr: , loss: 7.433458
+07/03/2025 15:24:53 - INFO -   Epoch: 17/20, Step: 220/255, Lr: , loss: 7.450023
+07/03/2025 15:24:56 - INFO -   Epoch: 17/20, Step: 230/255, Lr: , loss: 7.493006
+07/03/2025 15:24:58 - INFO -   Epoch: 17/20, Step: 240/255, Lr: , loss: 7.451770
+07/03/2025 15:25:00 - INFO -   Epoch: 17/20, Step: 250/255, Lr: , loss: 7.481161
+07/03/2025 15:25:01 - INFO -   Epoch 17/20 Finished, Train Loss: 7.424887.
+07/03/2025 15:25:02 - INFO -    res: f1 0.588927,	p 0.700370,	r 0.508082,	acc 0.493700.
+07/03/2025 15:25:02 - INFO -   ***** Running valing *****
+07/03/2025 15:25:02 - INFO -    res: f1 0.541710,	p 0.631453,	r 0.474301,	acc 0.451000.
+07/03/2025 15:25:02 - INFO -   Model saved to ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_16.bin.
+07/03/2025 15:25:02 - INFO -   The best model is: ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_10.bin., the f1 is: 0.5502
+07/03/2025 15:25:05 - INFO -   Epoch: 18/20, Step: 10/255, Lr: , loss: 7.493590
+07/03/2025 15:25:07 - INFO -   Epoch: 18/20, Step: 20/255, Lr: , loss: 7.427128
+07/03/2025 15:25:09 - INFO -   Epoch: 18/20, Step: 30/255, Lr: , loss: 7.513233
+07/03/2025 15:25:12 - INFO -   Epoch: 18/20, Step: 40/255, Lr: , loss: 7.446721
+07/03/2025 15:25:14 - INFO -   Epoch: 18/20, Step: 50/255, Lr: , loss: 7.390877
+07/03/2025 15:25:16 - INFO -   Epoch: 18/20, Step: 60/255, Lr: , loss: 7.440427
+07/03/2025 15:25:18 - INFO -   Epoch: 18/20, Step: 70/255, Lr: , loss: 7.397791
+07/03/2025 15:25:20 - INFO -   Epoch: 18/20, Step: 80/255, Lr: , loss: 7.461659
+07/03/2025 15:25:23 - INFO -   Epoch: 18/20, Step: 90/255, Lr: , loss: 7.405057
+07/03/2025 15:25:25 - INFO -   Epoch: 18/20, Step: 100/255, Lr: , loss: 7.466908
+07/03/2025 15:25:27 - INFO -   Epoch: 18/20, Step: 110/255, Lr: , loss: 7.457319
+07/03/2025 15:25:29 - INFO -   Epoch: 18/20, Step: 120/255, Lr: , loss: 7.301696
+07/03/2025 15:25:32 - INFO -   Epoch: 18/20, Step: 130/255, Lr: , loss: 7.343297
+07/03/2025 15:25:34 - INFO -   Epoch: 18/20, Step: 140/255, Lr: , loss: 7.467627
+07/03/2025 15:25:36 - INFO -   Epoch: 18/20, Step: 150/255, Lr: , loss: 7.396515
+07/03/2025 15:25:39 - INFO -   Epoch: 18/20, Step: 160/255, Lr: , loss: 7.382974
+07/03/2025 15:25:41 - INFO -   Epoch: 18/20, Step: 170/255, Lr: , loss: 7.459471
+07/03/2025 15:25:43 - INFO -   Epoch: 18/20, Step: 180/255, Lr: , loss: 7.431663
+07/03/2025 15:25:45 - INFO -   Epoch: 18/20, Step: 190/255, Lr: , loss: 7.330717
+07/03/2025 15:25:48 - INFO -   Epoch: 18/20, Step: 200/255, Lr: , loss: 7.358376
+07/03/2025 15:25:50 - INFO -   Epoch: 18/20, Step: 210/255, Lr: , loss: 7.391948
+07/03/2025 15:25:52 - INFO -   Epoch: 18/20, Step: 220/255, Lr: , loss: 7.439002
+07/03/2025 15:25:54 - INFO -   Epoch: 18/20, Step: 230/255, Lr: , loss: 7.412255
+07/03/2025 15:25:57 - INFO -   Epoch: 18/20, Step: 240/255, Lr: , loss: 7.350620
+07/03/2025 15:25:59 - INFO -   Epoch: 18/20, Step: 250/255, Lr: , loss: 7.538198
+07/03/2025 15:26:00 - INFO -   Epoch 18/20 Finished, Train Loss: 7.419702.
+07/03/2025 15:26:01 - INFO -    res: f1 0.590598,	p 0.700980,	r 0.510250,	acc 0.493700.
+07/03/2025 15:26:01 - INFO -   ***** Running valing *****
+07/03/2025 15:26:01 - INFO -    res: f1 0.544690,	p 0.620112,	r 0.485625,	acc 0.454300.
+07/03/2025 15:26:01 - INFO -   Model saved to ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_17.bin.
+07/03/2025 15:26:01 - INFO -   The best model is: ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_10.bin., the f1 is: 0.5502
+07/03/2025 15:26:04 - INFO -   Epoch: 19/20, Step: 10/255, Lr: , loss: 7.371468
+07/03/2025 15:26:06 - INFO -   Epoch: 19/20, Step: 20/255, Lr: , loss: 7.463759
+07/03/2025 15:26:08 - INFO -   Epoch: 19/20, Step: 30/255, Lr: , loss: 7.359849
+07/03/2025 15:26:10 - INFO -   Epoch: 19/20, Step: 40/255, Lr: , loss: 7.473134
+07/03/2025 15:26:12 - INFO -   Epoch: 19/20, Step: 50/255, Lr: , loss: 7.514764
+07/03/2025 15:26:15 - INFO -   Epoch: 19/20, Step: 60/255, Lr: , loss: 7.363066
+07/03/2025 15:26:17 - INFO -   Epoch: 19/20, Step: 70/255, Lr: , loss: 7.311673
+07/03/2025 15:26:19 - INFO -   Epoch: 19/20, Step: 80/255, Lr: , loss: 7.485481
+07/03/2025 15:26:22 - INFO -   Epoch: 19/20, Step: 90/255, Lr: , loss: 7.490635
+07/03/2025 15:26:24 - INFO -   Epoch: 19/20, Step: 100/255, Lr: , loss: 7.358113
+07/03/2025 15:26:26 - INFO -   Epoch: 19/20, Step: 110/255, Lr: , loss: 7.460833
+07/03/2025 15:26:28 - INFO -   Epoch: 19/20, Step: 120/255, Lr: , loss: 7.365214
+07/03/2025 15:26:31 - INFO -   Epoch: 19/20, Step: 130/255, Lr: , loss: 7.413813
+07/03/2025 15:26:33 - INFO -   Epoch: 19/20, Step: 140/255, Lr: , loss: 7.335542
+07/03/2025 15:26:35 - INFO -   Epoch: 19/20, Step: 150/255, Lr: , loss: 7.309490
+07/03/2025 15:26:37 - INFO -   Epoch: 19/20, Step: 160/255, Lr: , loss: 7.360803
+07/03/2025 15:26:40 - INFO -   Epoch: 19/20, Step: 170/255, Lr: , loss: 7.372049
+07/03/2025 15:26:42 - INFO -   Epoch: 19/20, Step: 180/255, Lr: , loss: 7.468025
+07/03/2025 15:26:44 - INFO -   Epoch: 19/20, Step: 190/255, Lr: , loss: 7.379725
+07/03/2025 15:26:46 - INFO -   Epoch: 19/20, Step: 200/255, Lr: , loss: 7.489874
+07/03/2025 15:26:49 - INFO -   Epoch: 19/20, Step: 210/255, Lr: , loss: 7.416179
+07/03/2025 15:26:51 - INFO -   Epoch: 19/20, Step: 220/255, Lr: , loss: 7.347486
+07/03/2025 15:26:53 - INFO -   Epoch: 19/20, Step: 230/255, Lr: , loss: 7.383015
+07/03/2025 15:26:55 - INFO -   Epoch: 19/20, Step: 240/255, Lr: , loss: 7.425263
+07/03/2025 15:26:58 - INFO -   Epoch: 19/20, Step: 250/255, Lr: , loss: 7.392754
+07/03/2025 15:26:59 - INFO -   Epoch 19/20 Finished, Train Loss: 7.417121.
+07/03/2025 15:26:59 - INFO -    res: f1 0.592789,	p 0.701372,	r 0.513320,	acc 0.496300.
+07/03/2025 15:26:59 - INFO -   ***** Running valing *****
+07/03/2025 15:27:00 - INFO -    res: f1 0.542580,	p 0.638911,	r 0.471492,	acc 0.451200.
+07/03/2025 15:27:00 - INFO -   Model saved to ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_18.bin.
+07/03/2025 15:27:00 - INFO -   The best model is: ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_10.bin., the f1 is: 0.5502
+07/03/2025 15:27:02 - INFO -   Epoch: 20/20, Step: 10/255, Lr: , loss: 7.413746
+07/03/2025 15:27:05 - INFO -   Epoch: 20/20, Step: 20/255, Lr: , loss: 7.406237
+07/03/2025 15:27:07 - INFO -   Epoch: 20/20, Step: 30/255, Lr: , loss: 7.345692
+07/03/2025 15:27:09 - INFO -   Epoch: 20/20, Step: 40/255, Lr: , loss: 7.434481
+07/03/2025 15:27:11 - INFO -   Epoch: 20/20, Step: 50/255, Lr: , loss: 7.381073
+07/03/2025 15:27:14 - INFO -   Epoch: 20/20, Step: 60/255, Lr: , loss: 7.500693
+07/03/2025 15:27:16 - INFO -   Epoch: 20/20, Step: 70/255, Lr: , loss: 7.424367
+07/03/2025 15:27:18 - INFO -   Epoch: 20/20, Step: 80/255, Lr: , loss: 7.437747
+07/03/2025 15:27:20 - INFO -   Epoch: 20/20, Step: 90/255, Lr: , loss: 7.551136
+07/03/2025 15:27:23 - INFO -   Epoch: 20/20, Step: 100/255, Lr: , loss: 7.411280
+07/03/2025 15:27:25 - INFO -   Epoch: 20/20, Step: 110/255, Lr: , loss: 7.573011
+07/03/2025 15:27:27 - INFO -   Epoch: 20/20, Step: 120/255, Lr: , loss: 7.332742
+07/03/2025 15:27:29 - INFO -   Epoch: 20/20, Step: 130/255, Lr: , loss: 7.349010
+07/03/2025 15:27:32 - INFO -   Epoch: 20/20, Step: 140/255, Lr: , loss: 7.391823
+07/03/2025 15:27:34 - INFO -   Epoch: 20/20, Step: 150/255, Lr: , loss: 7.480547
+07/03/2025 15:27:36 - INFO -   Epoch: 20/20, Step: 160/255, Lr: , loss: 7.269375
+07/03/2025 15:27:38 - INFO -   Epoch: 20/20, Step: 170/255, Lr: , loss: 7.428675
+07/03/2025 15:27:41 - INFO -   Epoch: 20/20, Step: 180/255, Lr: , loss: 7.430315
+07/03/2025 15:27:43 - INFO -   Epoch: 20/20, Step: 190/255, Lr: , loss: 7.371813
+07/03/2025 15:27:45 - INFO -   Epoch: 20/20, Step: 200/255, Lr: , loss: 7.372398
+07/03/2025 15:27:47 - INFO -   Epoch: 20/20, Step: 210/255, Lr: , loss: 7.440450
+07/03/2025 15:27:50 - INFO -   Epoch: 20/20, Step: 220/255, Lr: , loss: 7.315883
+07/03/2025 15:27:52 - INFO -   Epoch: 20/20, Step: 230/255, Lr: , loss: 7.470625
+07/03/2025 15:27:54 - INFO -   Epoch: 20/20, Step: 240/255, Lr: , loss: 7.434924
+07/03/2025 15:27:57 - INFO -   Epoch: 20/20, Step: 250/255, Lr: , loss: 7.397088
+07/03/2025 15:27:58 - INFO -   Epoch 20/20 Finished, Train Loss: 7.414796.
+07/03/2025 15:27:58 - INFO -    res: f1 0.592629,	p 0.706254,	r 0.510497,	acc 0.495300.
+07/03/2025 15:27:58 - INFO -   ***** Running valing *****
+07/03/2025 15:27:59 - INFO -    res: f1 0.543012,	p 0.622151,	r 0.481734,	acc 0.450800.
+07/03/2025 15:27:59 - INFO -   Model saved to ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_19.bin.
+07/03/2025 15:27:59 - INFO -   The best model is: ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_10.bin., the f1 is: 0.5502
+07/03/2025 15:27:59 - INFO -   ***** Running testing *****
+07/03/2025 15:28:00 - INFO -   Model loaded from ./model_saved/aligned/carat_sd1_t0.25_id0/pytorch_model_10.bin.
+07/03/2025 15:28:00 - WARNING -   Set text_config.num_hidden_layers: 6.
+07/03/2025 15:28:00 - WARNING -   Set visual_config.num_hidden_layers: 4.
+07/03/2025 15:28:00 - WARNING -   Set audio_config.num_hidden_layers: 4.
+07/03/2025 15:28:00 - INFO -   --------------------
+07/03/2025 15:28:02 - INFO -    res: f1 0.567608,	p 0.660193,	r 0.497797,	acc 0.484400
