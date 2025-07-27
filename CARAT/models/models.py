@@ -7,11 +7,12 @@ import math
 
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 import numpy as np 
 
 from .module_encoder import TfModel, TextConfig, VisualConfig, AudioConfig
 from .until_module import PreTrainedModel, LayerNorm
-from .until_module import getBinaryTensor, CTCModule, MLLinear, MLAttention
+from .until_module import getBinaryTensor, CTCModule, MLLinear, MLAttention, AdaptiveCTCModule
 import warnings
 from .losses import *
 
@@ -145,8 +146,30 @@ class CARAT(CARATPreTrainedModel):
         self.queue = F.normalize(self.queue, dim=0)
 
         if not self.aligned:
-            self.a2t_ctc = CTCModule(task_config.audio_dim, 50 if task_config.unaligned_mask_same_length else 500)
-            self.v2t_ctc = CTCModule(task_config.video_dim, 50 if task_config.unaligned_mask_same_length else 500)
+            # Initialize AdaptiveCTC modules for variable timestep data
+            # print(f"Initializing AdaptiveCTC for variable timestep data:")
+            
+            # Get position embedding limits from configs
+            audio_max_pos = getattr(audio_config, 'max_position_embeddings', 512)
+            visual_max_pos = getattr(visual_config, 'max_position_embeddings', 512)
+            
+            # print(f"  Audio max_position_embeddings: {audio_max_pos}")
+            # print(f"  Visual max_position_embeddings: {visual_max_pos}")
+            
+            # Initialize with adaptive target lengths
+            # Max dims: text=374, visual=3140, audio=10891 max timesteps
+            self.a2t_ctc = AdaptiveCTCModule(
+                in_dim=task_config.audio_dim,  # 74 - COVAREP features
+                min_target_len=50,
+                max_target_len=audio_max_pos,  # Use position embedding limit
+                max_position_embeddings=audio_max_pos
+            )
+            self.v2t_ctc = AdaptiveCTCModule(
+                in_dim=task_config.video_dim,  # 35 - VisualFacet features  
+                min_target_len=50,
+                max_target_len=visual_max_pos,  # Use position embedding limit
+                max_position_embeddings=visual_max_pos
+            )
 
     def dequeue_and_enqueue(self, feats, labels):
         batch_size = feats.shape[0]
@@ -227,9 +250,56 @@ class CARAT(CARATPreTrainedModel):
         text = self.text_norm(text)
         visual = self.visual_norm(visual)
         audio = self.audio_norm(audio)
+        
+        text = torch.nan_to_num(text, nan=0.0, posinf=1e6, neginf=-1e6)
+        visual = torch.nan_to_num(visual, nan=0.0, posinf=1e6, neginf=-1e6)
+        audio = torch.nan_to_num(audio, nan=0.0, posinf=1e6, neginf=-1e6)
+        
         if self.aligned == False:
-            visual, v2t_position = self.v2t_ctc(visual)
-            audio, a2t_position = self.a2t_ctc(audio)
+            # Store original batch statistics for variable timestep processing
+            batch_size = visual.shape[0]
+            orig_visual_len = visual.shape[1]
+            orig_audio_len = audio.shape[1]
+            orig_text_len = text.shape[1]
+            
+            # Calculate adaptive target length based on batch and modality-specific constraints
+            ctc_target = getattr(self.task_config, 'ctc_target_length', 200)  # Default to 200 for variable data
+            text_max_pos = getattr(self.task_config, 'text_max_position_embeddings', 512)
+            visual_max_pos = getattr(self.task_config, 'visual_max_position_embeddings', 1024)
+            audio_max_pos = getattr(self.task_config, 'audio_max_position_embeddings', 1024)
+            
+            # Calculate batch-adaptive target length
+            # Use ctc_target as baseline, bounded by sequence statistics and embedding limits
+            max_seq_len = max(orig_visual_len, orig_audio_len)
+            batch_target_length = min(
+                max(ctc_target, min(max_seq_len // 4, 300)),  # At least ctc_target, up to 1/4 of max sequence
+                min(visual_max_pos, audio_max_pos)  # Don't exceed position embedding limits
+            )
+            
+            # print(f"BATCH STATS: visual={orig_visual_len}, audio={orig_audio_len}, text={orig_text_len}")
+            # print(f"TARGET LENGTH: {batch_target_length} (ctc_target={ctc_target})")
+            
+            # Apply adaptive CTC alignment
+            visual, v2t_position = self.v2t_ctc(visual, target_length=batch_target_length)
+            audio, a2t_position = self.a2t_ctc(audio, target_length=batch_target_length)
+            
+            # Handle text truncation/padding to match target length
+            if orig_text_len > batch_target_length:
+                print(f"WARNING: Truncating text from {orig_text_len} to {batch_target_length}")
+                text = text[:, :batch_target_length, :]
+                text_mask = text_mask[:, :batch_target_length]
+            elif orig_text_len < batch_target_length:
+                # Pad text if it's shorter than target
+                text_padding = torch.zeros(batch_size, batch_target_length - orig_text_len, text.shape[2], 
+                                         device=text.device, dtype=text.dtype)
+                text = torch.cat([text, text_padding], dim=1)
+                mask_padding = torch.zeros(batch_size, batch_target_length - orig_text_len, 
+                                         device=text_mask.device, dtype=text_mask.dtype)
+                text_mask = torch.cat([text_mask, mask_padding], dim=1)
+            
+            # Update masks to match aligned sequence lengths
+            visual_mask = torch.ones(batch_size, batch_target_length, dtype=torch.long, device=visual.device)
+            audio_mask = torch.ones(batch_size, batch_target_length, dtype=torch.long, device=audio.device)
         text_output, visual_output, audio_output = self.get_text_visual_audio_output(text, text_mask, visual,
                                                                                      visual_mask, audio,
                                                                                      audio_mask)  # [B, L, D]
@@ -417,5 +487,3 @@ class CARAT(CARATPreTrainedModel):
         else:
 
             return predict_labels, groundTruth_labels, predict_scores
-
-
