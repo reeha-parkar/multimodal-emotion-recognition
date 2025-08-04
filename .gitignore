@@ -8,6 +8,8 @@ CMU-MultimodalSDK-Tutorials/data
 *.pyc
 __pycache__/
 
+.vscode/
+
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
@@ -17,13 +19,14 @@ __pycache__/
 # CARAT's data
 CARAT/data/train_valid_test.pt
 CARAT/data/cmu_mosei_unaligned_ree.pt
+CARAT/data/omg_emotion_data.pt
 
 
 # Model logs
 CARAT/model_saved/
 
 # Git repo of OMGEmotion dataset
-OMGEmotionChallenge/DetailedAnnotations/
+# OMGEmotionChallenge/DetailedAnnotations/
 
 
 
