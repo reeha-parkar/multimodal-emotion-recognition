@@ -16,12 +16,13 @@ __pycache__/
 
 # CARAT's data
 CARAT/data/train_valid_test.pt
+CARAT/data/cmu_mosei_unaligned_ree.pt
 
 
 # Model logs
 CARAT/model_saved/
 
-# Git repo of OMGEmotion dataset (unused)
+# Git repo of OMGEmotion dataset
 OMGEmotionChallenge/DetailedAnnotations/
 
 
