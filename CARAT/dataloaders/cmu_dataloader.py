@@ -2,6 +2,7 @@
 import os
 import torch
 from torch.utils.data import Dataset, DataLoader
+from torch.nn.utils.rnn import pad_sequence
 import numpy as np
 from collections import defaultdict
 import json
@@ -9,6 +10,48 @@ import random
 import time
 import pickle
 import math
+
+
+
+def custom_collate_fn(batch):
+    """
+    Custom collate function for variable-length sequences in unaligned data.
+    Pads sequences to the same length within each batch and creates proper masks.
+    """
+    # Separate different modalities and labels
+    texts, text_masks, visuals, visual_masks, audios, audio_masks, labels = zip(*batch)
+    
+    # Convert to tensors and pad sequences
+    texts = [torch.FloatTensor(text) for text in texts]
+    visuals = [torch.FloatTensor(visual) for visual in visuals]
+    audios = [torch.FloatTensor(audio) for audio in audios]
+    
+    # Pad sequences to the same length within batch
+    texts_padded = pad_sequence(texts, batch_first=True, padding_value=0)
+    visuals_padded = pad_sequence(visuals, batch_first=True, padding_value=0)
+    audios_padded = pad_sequence(audios, batch_first=True, padding_value=0)
+    
+    # Create proper attention masks based on actual sequence lengths
+    batch_size = len(texts)
+    max_text_len = texts_padded.shape[1]
+    max_visual_len = visuals_padded.shape[1]
+    max_audio_len = audios_padded.shape[1]
+    
+    # Create attention masks - Use actual padded lengths, not original lengths
+    text_masks_padded = torch.zeros(batch_size, max_text_len, dtype=torch.long)
+    visual_masks_padded = torch.zeros(batch_size, max_visual_len, dtype=torch.long)
+    audio_masks_padded = torch.zeros(batch_size, max_audio_len, dtype=torch.long)
+    
+    for i, (text, visual, audio) in enumerate(zip(texts, visuals, audios)):
+        text_masks_padded[i, :text.shape[0]] = 1
+        visual_masks_padded[i, :visual.shape[0]] = 1
+        audio_masks_padded[i, :audio.shape[0]] = 1
+    
+    # Convert labels to tensor
+    labels = torch.FloatTensor(labels)
+    
+    return (texts_padded, text_masks_padded, visuals_padded, visual_masks_padded, 
+            audios_padded, audio_masks_padded, labels)
 
 
 """
@@ -27,7 +70,7 @@ text: (50, 300)
 visual: (500, 35)
 audio: (500, 74)    
 """
-FIXED_LENGTH = 500
+FIXED_LENGTH = 50
 emotion_dict = {4:0, 5:1, 6:2, 7:3, 8:4, 9:5}
 class AlignedMoseiDataset(Dataset):
     def __init__(self, data_path, data_type, args):
@@ -259,61 +302,28 @@ class CustomNonAlignedMOSEI(Dataset):
     def _get_text(self, index):
         """Get text features with variable length preserved"""
         text = self.text[index]
-
-        if self.args.unaligned_mask_same_length:
-            if text.shape[0] > FIXED_LENGTH:
-                text = text[:FIXED_LENGTH]
-            text_mask = [1] * text.shape[0] + [0] * (FIXED_LENGTH - text.shape[0])
-            if text.shape[0] < FIXED_LENGTH:
-                padding = np.zeros((FIXED_LENGTH - text.shape[0], text.shape[1]))
-                text = np.concatenate([text, padding], axis=0)
-        else:
-            text_mask = [1] * text.shape[0]
-
-        #text_mask = [1] * text.shape[0]
+        text = np.nan_to_num(text, nan=0.0, posinf=0.0, neginf=0.0)
+        # Note: Padding handled by custom_collate_fn, so we keep original lengths
+        text_mask = [1] * text.shape[0]
         text_mask = np.array(text_mask)
         return text, text_mask
 
     def _get_visual(self, index):
         """Get visual features with original temporal intervals"""
         visual = self.visual[index]
-        
-        # Use actual sequence length for mask (no fixed length)
-        if self.args.unaligned_mask_same_length:
-            # Option to use fixed mask length if specified
-            
-            # Greater than fixed length so truncate:
-            if visual.shape[0] > FIXED_LENGTH:
-                visual = visual[:FIXED_LENGTH]
-            visual_mask = [1] * visual.shape[0] + [0] * (FIXED_LENGTH - visual.shape[0])
-
-            # Lesser than fixed length so pad:
-            if visual.shape[0] < FIXED_LENGTH:
-                padding = np.zeros((FIXED_LENGTH - visual.shape[0], visual.shape[1]))
-                visual = np.concatenate([visual, padding], axis=0)
-
-            #visual_mask = [1] * min(visual.shape[0], 500)  
-        else: # using original sequence length if unaligned_mask_same_length is not me3ntioned
-            visual_mask = [1] * visual.shape[0]
-
+        visual = np.nan_to_num(visual, nan=0.0, posinf=0.0, neginf=0.0)
+        # Note: Padding handled by custom_collate_fn, so we keep original lengths
+        visual_mask = [1] * visual.shape[0]
         visual_mask = np.array(visual_mask)
         return visual, visual_mask
 
     def _get_audio(self, index):
         """Get audio features with original temporal intervals"""
-        audio = self.audio[index]        
-    
-        if self.args.unaligned_mask_same_length:
-            FIXED_LENGTH = 500
-            if audio.shape[0] > FIXED_LENGTH:
-                audio = audio[:FIXED_LENGTH]
-            audio_mask = [1] * audio.shape[0] + [0] * (FIXED_LENGTH - audio.shape[0])
-            if audio.shape[0] < FIXED_LENGTH:
-                padding = np.zeros((FIXED_LENGTH - audio.shape[0], audio.shape[1]))
-                audio = np.concatenate([audio, padding], axis=0)
-        else:
-            audio_mask = [1] * audio.shape[0]
-
+        audio = self.audio[index]
+        audio[audio == -np.inf] = 0
+        audio = np.nan_to_num(audio, nan=0.0, posinf=0.0, neginf=0.0)
+        # Note: Padding handled by custom_collate_fn, so we keep original lengths
+        audio_mask = [1] * audio.shape[0]
         audio_mask = np.array(audio_mask)
         return audio, audio_mask
 

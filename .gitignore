@@ -14,17 +14,15 @@ __pycache__/
 # Any pdf files
 *.pdf
 
-# Trial/experimentation notebooks
-trash/
-
-
 # CARAT's data
 CARAT/data/train_valid_test.pt
-CARAT/data/cmu_mosei_unaligned_ree.pt
 
 
 # Model logs
 CARAT/model_saved/
+
+# Git repo of OMGEmotion dataset (unused)
+OMGEmotionChallenge/DetailedAnnotations/
 
 
 

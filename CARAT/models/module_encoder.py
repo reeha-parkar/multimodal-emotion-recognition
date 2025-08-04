@@ -127,9 +127,20 @@ class TfEmbeddings(nn.Module):
         self.dropout = nn.Dropout(config.hidden_dropout_prob)
 
     def forward(self, input_embeddings):
-        seq_length = input_embeddings.size(1)  # 60
+        seq_length = input_embeddings.size(1)
+        
+        # Ensure position IDs don't exceed embedding bounds
+        max_positions = self.position_embeddings.num_embeddings  # Get actual embedding limit
+        if seq_length > max_positions:
+            print(f"WARNING: seq_length ({seq_length}) > max_position_embeddings ({max_positions})")
+            print(f"   Truncating sequence to prevent CUDA indexing error")
+            # Truncate the input sequence to fit within position embedding bounds
+            input_embeddings = input_embeddings[:, :max_positions, :]
+            seq_length = max_positions
+        
         position_ids = torch.arange(seq_length, dtype=torch.long, device=input_embeddings.device)
         position_ids = position_ids.unsqueeze(0).expand(input_embeddings.size(0), -1)
+        
         words_embeddings = self.word_embeddings(input_embeddings)
         position_embeddings = self.position_embeddings(position_ids)
         embeddings = words_embeddings + position_embeddings

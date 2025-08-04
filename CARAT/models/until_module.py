@@ -189,6 +189,81 @@ class CTCModule(nn.Module): #
         
         # pseudo_aligned_out is regarded as the aligned A (w.r.t B)
         return pseudo_aligned_out, (pred_output_position_inclu_blank)
+    
+
+class AdaptiveCTCModule(nn.Module):
+    def __init__(self, in_dim, min_target_len=50, max_target_len=400, max_position_embeddings=512):
+        super(AdaptiveCTCModule, self).__init__()
+        self.in_dim = in_dim
+        self.min_target_len = min_target_len
+        self.max_target_len = max_target_len
+        self.max_position_embeddings = max_position_embeddings  # Store the position embedding limit
+        
+        # Adaptive projection layers maintaining original dimension
+        self.hidden_dim = min(512, in_dim * 2)
+        self.fc1 = nn.Linear(in_dim, self.hidden_dim)
+        self.fc2 = nn.Linear(self.hidden_dim, self.hidden_dim)
+        self.dropout = nn.Dropout(0.1)
+        self.activation = nn.ReLU()
+        
+        # TfEmbeddings receives the expected original dimension
+        self.final_projection = nn.Linear(self.hidden_dim, in_dim)
+
+    def forward(self, x, target_length=None):
+        # x shape: [batch_size, in_seq_len, in_dim]
+        batch_size, in_seq_len, in_dim = x.shape
+        
+        # Calculate adaptive target length based on batch statistics
+        if target_length is None:
+            # Use 90th percentile of current batch lengths + small buffer
+            batch_max = in_seq_len
+            target_length = min(
+                max(int(batch_max * 1.1), self.min_target_len),  # 10% buffer
+                self.max_target_len
+            )
+        
+        # Pass through feature transformation layers
+        h1 = self.activation(self.fc1(x))  # [batch_size, in_seq_len, hidden_dim]
+        h1 = self.dropout(h1)
+        
+        h2 = self.activation(self.fc2(h1))  # [batch_size, in_seq_len, hidden_dim]
+        h2 = self.dropout(h2)
+        
+        # Project to standard output dimension
+        features = self.final_projection(h2)  # [batch_size, in_seq_len, in_dim]
+        
+        # Adaptive temporal alignment using interpolation
+        if in_seq_len != target_length:
+            # Transpose for interpolation: [batch_size, in_dim, in_seq_len]
+            features_t = features.transpose(1, 2)
+            
+            # Interpolate to target length
+            aligned_features = F.interpolate(
+                features_t, 
+                size=target_length, 
+                mode='linear', 
+                align_corners=False
+            )
+            
+            # Transpose back: [batch_size, target_length, in_dim]
+            output = aligned_features.transpose(1, 2)
+        else:
+            output = features
+        
+        # Generate position encodings for aligned sequence
+        # Position ids should not exceed max_position_embeddings
+        effective_target_length = min(target_length, self.max_position_embeddings)
+        position_ids = torch.arange(effective_target_length, dtype=torch.long, device=x.device)
+        position_ids = position_ids.unsqueeze(0).expand(batch_size, -1)
+        
+        # If target_length > max_position_embeddings, truncate the output to match position_ids
+        if target_length > self.max_position_embeddings:
+            print(f"WARNING: target_length ({target_length}) > max_position_embeddings ({self.max_position_embeddings})")
+            print(f"   Truncating output to {self.max_position_embeddings} to prevent CUDA indexing error")
+            output = output[:, :self.max_position_embeddings, :]
+        
+        return output, position_ids
+    
 
 class MLAttention(nn.Module):
     def __init__(self, label_num, hidden_size):
@@ -198,7 +273,7 @@ class MLAttention(nn.Module):
 
     def forward(self, inputs, masks):
         masks = torch.unsqueeze(masks, 1)
-        attention = self.attention(inputs).transpose(1,2).masked_fill(masks, -np.inf)
+        attention = self.attention(inputs).transpose(1,2).masked_fill(~masks, -np.inf)
         attention = F.softmax(attention, -1)
         return attention @ inputs, attention
 

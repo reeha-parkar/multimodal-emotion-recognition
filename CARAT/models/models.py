@@ -98,7 +98,13 @@ class CARAT(CARATPreTrainedModel):
         self.text_norm = Normalize(task_config.text_dim)
         self.visual_norm = Normalize(task_config.video_dim)
         self.audio_norm = Normalize(task_config.audio_dim)
-        self.bce_loss = nn.BCEWithLogitsLoss()
+        
+        #self.bce_loss = nn.BCEWithLogitsLoss()
+        
+        # Weight rare emotions more heavily during training
+        pos_weights = torch.tensor([1.0, 1.1, 1.2, 2.5, 1.3, 3.0])  # Happy, Sad, Anger, Surprise, Disgust, Fear
+        self.bce_loss = nn.BCEWithLogitsLoss(pos_weight=pos_weights)
+        
         self.mse_loss = nn.MSELoss()
         self.criterion_cl = SupConLoss()
 

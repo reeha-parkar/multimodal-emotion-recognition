@@ -1,0 +1,22 @@
+{
+  "python.analysis.exclude": [
+    "**/node_modules",
+    "**/__pycache__",
+    "CMU-MultimodalSDK/**",
+    "CMU-MultimodalSDK-Tutorials/data/**",
+    "**/data/**",
+    "**/model_saved/**",
+    "**/*.csd",
+    "**/*.pt",
+    "**/*.pkl"
+  ],
+  "python-envs.defaultEnvManager": "ms-python.python:system",
+  "python-envs.pythonProjects": [],
+  "python.analysis.indexing": false,
+  "files.watcherExclude": {
+    "**/data/**": true,
+    "**/model_saved/**": true,
+    "**/*.csd": true,
+    "**/*.pt": true
+    }
+}

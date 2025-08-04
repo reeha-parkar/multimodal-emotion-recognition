@@ -17,7 +17,7 @@ from utils.eval import get_metrics
 from torch.utils.data import DataLoader
 
 from util import get_logger
-from dataloaders.cmu_dataloader import AlignedMoseiDataset, UnAlignedMoseiDataset, CustomNonAlignedMOSEI
+from dataloaders.cmu_dataloader import AlignedMoseiDataset, UnAlignedMoseiDataset, CustomNonAlignedMOSEI, custom_collate_fn
 
 
 global logger
@@ -75,11 +75,26 @@ def get_args(description='Multi-modal Multi-label Emotion Recognition'):
     parser.add_argument('--moco_queue', type=int, default=8192)
     parser.add_argument('--binary_threshold', type=float, default=0.35)
     parser.add_argument('--unaligned_mask_same_length', action='store_true', help='Use same length mask for unaligned data')
+
+    parser.add_argument('--max_seq_length', type=int, default=50, help='Maximum sequence length for all modalities')
     parser.add_argument('--use_custom_dataset', action='store_true', help='Whether to use custom unaligned dataset')
     parser.add_argument('--custom_data_path', default='./data/cmu_mosei_unaligned_ree.pt', type=str, help='custom unaligned data path')
+    
+    # CTC Alignment numbers
+    parser.add_argument('--ctc_target_length', type=int, default=100, help='Target sequence length for CTC alignment (should be >= max text length in dataset)')
+    parser.add_argument("--text_max_position_embeddings", type=int, default=60, help="Maximum position embeddings for text modality")
+    parser.add_argument("--visual_max_position_embeddings", type=int, default=512, help="Maximum position embeddings for visual modality")
+    parser.add_argument("--audio_max_position_embeddings", type=int, default=512, help="Maximum position embeddings for audio modality")
+ 
 
 
     args = parser.parse_args()
+
+    if args.hidden_size % 64 != 0:
+        raise ValueError(f"hidden_size ({args.hidden_size}) must be divisible by 64 for attention heads")
+    if args.hidden_size < 128:
+        raise ValueError(f"hidden_size ({args.hidden_size}) must be at least 128")
+    
     # Check paramenters
     if args.gradient_accumulation_steps < 1: 
         raise ValueError("Invalid gradient_accumulation_steps parameter: {}, should be >= 1".format(
@@ -128,8 +143,8 @@ def init_device(args, local_rank):
     logger.info("device: {} n_gpu: {}".format(device, n_gpu))
     args.n_gpu = n_gpu
     if args.batch_size % args.n_gpu != 0: 
-        raise ValueError("Invalid batch_size/batch_size_val and n_gpu parameter: {}%{} and {}%{}, should be == 0".format(
-            args.batch_size, args.n_gpu, args.batch_size_val, args.n_gpu))
+        raise ValueError("Invalid batch_size and n_gpu parameter: {}%{}, should be == 0".format(
+            args.batch_size, args.n_gpu))
     return device, n_gpu
 
 
@@ -188,13 +203,18 @@ def prep_dataloader(args):
          args
     )
     label_input, label_mask = train_dataset._get_label_input()
+    
+    # Use custom collate function for custom unaligned dataset
+    collate_fn = custom_collate_fn if args.use_custom_dataset else None
+    
     train_dataloader = DataLoader(
         train_dataset,
         batch_size=args.batch_size // args.n_gpu,
         num_workers=args.num_thread_reader,
         pin_memory=False,
         shuffle=True,
-        drop_last=True
+        drop_last=True,
+        collate_fn=collate_fn
     )
     val_dataloader = DataLoader(
         val_dataset,
@@ -202,7 +222,8 @@ def prep_dataloader(args):
         num_workers=args.num_thread_reader,
         pin_memory=False,
         shuffle=True,
-        drop_last=True   
+        drop_last=True,
+        collate_fn=collate_fn   
     )
     test_dataloader = DataLoader(
         test_dataset,
@@ -210,6 +231,7 @@ def prep_dataloader(args):
         num_workers=args.num_thread_reader,
         pin_memory=False,
         shuffle=False,
+        collate_fn=collate_fn
         # drop_last=True
     )
     return train_dataloader, val_dataloader, test_dataloader, label_input, label_mask
@@ -306,16 +328,186 @@ def eval_epoch(args, model, val_dataloader, device, n_gpu, label_input, label_ma
         total_true_label = torch.cat(total_true_label, 0)
         total_pred_scores = torch.cat(total_pred_scores, 0)
         return total_pred, total_true_label, total_pred_scores
-           
+
+def create_custom_config_files(args):
+    """Create or update custom config files with dynamic dimensions"""
+       
+    # Ensure position embeddings can handle CTC output + safety margin
+    safe_visual_pos = max(args.visual_max_position_embeddings, args.ctc_target_length + 50)
+    safe_audio_pos = max(args.audio_max_position_embeddings, args.ctc_target_length + 50)
+
+    # print(f"\nCreating custom config files with dimensions:")
+    # print(f"   CTC target length: {args.ctc_target_length}")
+    # print(f"   Text max position embeddings: {args.text_max_position_embeddings}")
+    # print(f"   Visual max position embeddings: {safe_visual_pos}")
+    # print(f"   Audio max position embeddings: {safe_audio_pos}")
+    
+    configs_dir = os.path.join(os.path.dirname(__file__), 'models', args.text_model)
+    
+    # Custom text config
+    custom_text_config = {
+        "attention_probs_dropout_prob": 0.3,
+        "hidden_act": "gelu",
+        "hidden_dropout_prob": 0.3,
+        "hidden_size": args.hidden_size,  # Use args.hidden_size for dynamic size
+        "initializer_range": 0.02,
+        "intermediate_size": args.hidden_size,
+        "max_position_embeddings": args.text_max_position_embeddings,
+        "num_attention_heads": max(4, args.hidden_size // 64), # Scaling attention heads based on hidden size
+        "num_hidden_layers": args.text_num_hidden_layers,
+        "type_vocab_size": 2,
+        "vocab_size": args.text_dim
+    }
+    
+    # Custom visual config  
+    custom_visual_config = {
+        "attention_probs_dropout_prob": 0.3,
+        "hidden_act": "gelu",
+        "hidden_dropout_prob": 0.3,
+        "hidden_size": args.hidden_size,  # Use args.hidden_size for dynamic size
+        "initializer_range": 0.02,
+        "intermediate_size": args.hidden_size,
+        "max_position_embeddings": safe_visual_pos,
+        "num_attention_heads": max(4, args.hidden_size // 64), # Scaling attention heads based on hidden size
+        "num_hidden_layers": args.visual_num_hidden_layers,
+        "vocab_size": args.video_dim
+    }
+    
+    # Custom audio config
+    custom_audio_config = {
+        "attention_probs_dropout_prob": 0.1,
+        "hidden_act": "gelu", 
+        "hidden_dropout_prob": 0.1,
+        "hidden_size": args.hidden_size,  # Use args.hidden_size for dynamic size
+        "initializer_range": 0.02,
+        "intermediate_size": args.hidden_size,
+        "max_position_embeddings": safe_audio_pos,
+        "num_attention_heads": max(4, args.hidden_size // 64), # Scaling attention heads based on hidden size
+        "num_hidden_layers": args.audio_num_hidden_layers,
+        "vocab_size": args.audio_dim
+    }
+    
+    # Write config files with standard names that CARAT expects
+    text_config_path = os.path.join(configs_dir, 'text_config.json')
+    visual_config_path = os.path.join(configs_dir, 'visual_config.json') 
+    audio_config_path = os.path.join(configs_dir, 'audio_config.json')
+    
+    with open(text_config_path, 'w') as f:
+        json.dump(custom_text_config, f, indent=4)
+    with open(visual_config_path, 'w') as f:
+        json.dump(custom_visual_config, f, indent=4)
+    with open(audio_config_path, 'w') as f:
+        json.dump(custom_audio_config, f, indent=4)
+        
+    # print(f"Custom config files created:")
+    # print(f"   Text: {text_config_path}")
+    # print(f"   Visual: {visual_config_path}")
+    # print(f"   Audio: {audio_config_path}")
+    
+    return True
+
+def use_original_config_files(args):
+    """Restore original CARAT config files for aligned dataset"""
+    
+    # Original CARAT text config
+    text_config = {
+        "attention_probs_dropout_prob": 0.3,
+        "hidden_act": "gelu", 
+        "hidden_dropout_prob": 0.3,
+        "hidden_size": 256,
+        "initializer_range": 0.02,
+        "intermediate_size": 256,
+        "max_position_embeddings": 60,
+        "num_attention_heads": 8,
+        "num_hidden_layers": 12,
+        "type_vocab_size": 2,
+        "vocab_size": 300
+    }
+
+    visual_config = {
+        "attention_probs_dropout_prob": 0.3,
+        "hidden_act": "gelu", 
+        "hidden_dropout_prob": 0.3,
+        "hidden_size": 256,
+        "initializer_range": 0.02,
+        "intermediate_size": 256,
+        "max_position_embeddings": 500,
+        "num_attention_heads": 8,
+        "num_hidden_layers": 12,
+        "vocab_size": 35
+    }
+
+    audio_config = {
+        "attention_probs_dropout_prob": 0.3,
+        "hidden_act": "gelu", 
+        "hidden_dropout_prob": 0.3,
+        "hidden_size": 256,
+        "initializer_range": 0.02,
+        "intermediate_size": 256,
+        "max_position_embeddings": 500,
+        "num_attention_heads": 8,
+        "num_hidden_layers": 12,
+        "vocab_size": 74
+    }
+    
+    # Write original config files back to standard locations
+    configs_dir = os.path.join(os.path.dirname(__file__), 'models', args.text_model)
+    
+    text_config_path = os.path.join(configs_dir, 'text_config.json')
+    visual_config_path = os.path.join(configs_dir, 'visual_config.json')
+    audio_config_path = os.path.join(configs_dir, 'audio_config.json')
+    
+    with open(text_config_path, 'w') as f:
+        json.dump(text_config, f, indent=4)
+    with open(visual_config_path, 'w') as f:
+        json.dump(visual_config, f, indent=4)
+    with open(audio_config_path, 'w') as f:
+        json.dump(audio_config, f, indent=4)
+        
+    # print(f"Original CARAT config files restored:")
+    # print(f"   Text: {text_config_path}")
+    # print(f"   Visual: {visual_config_path}")
+    # print(f"   Audio: {audio_config_path}")
+    
+    return True
+
+
+
 def main():
     global logger
     args = get_args()
     args = set_seed_logger(args)
     device, n_gpu = init_device(args, args.local_rank)
 
+    # Create custom configs if using custom dataset
+    if args.use_custom_dataset:
+        print("\nUsing custom configurations for variable timestep data...")
+        create_custom_config_files(args)
+    else:
+        print("\nRestoring original CARAT configurations...")
+        use_original_config_files(args)
+
     model = CARAT.from_pretrained(args.text_model, args.visual_model, args.audio_model,
-                                       task_config=args)
+                                  task_config=args, cache_dir=None)
+    
     model = model.to(device)
+
+    # Verify model dimensions
+    if args.use_custom_dataset and args.local_rank == 0:
+        logger.info(f"Model initialized with hidden_size: {args.hidden_size}")
+        
+        # Check if model actually uses the custom hidden size
+        sample_param = None
+        for name, param in model.named_parameters():
+            if 'text_model' in name and 'dense' in name:
+                sample_param = param
+                break
+        
+        if sample_param is not None:
+            logger.info(f"Sample model parameter shape: {sample_param.shape}")
+            if args.hidden_size not in sample_param.shape:
+                logger.warning(f"Model may not be using custom hidden_size={args.hidden_size}")
+
 
     if args.do_train:
         train_dataloader, val_dataloader, test_dataloader, label_input, label_mask = prep_dataloader(args)
@@ -327,12 +519,17 @@ def main():
         optimizer, scheduler, model = prep_optimizer(args, model, num_train_optimization_steps)
 
         if args.local_rank == 0:
-            logger.info("***** Running training *****")
-            logger.info("  Num steps = %d", num_train_optimization_steps * args.gradient_accumulation_steps)
+            logger.info("------------------- Running training -------------------")
+            logger.info("Total training steps = %d", num_train_optimization_steps * args.gradient_accumulation_steps)
 
         best_score = 0.000
         best_output_model_file = None
         global_step = 0
+
+        patience = 8 # Early stopping patience
+        patience_counter = 0
+
+
         for epoch in range(args.epochs):
             total_loss, total_pred, total_label, total_pred_scores = train_epoch(epoch, args, model, train_dataloader, device, n_gpu, optimizer,
                                                 scheduler, global_step, local_rank=args.local_rank, label_input=label_input, label_mask=label_mask)
@@ -342,32 +539,41 @@ def main():
 
             total_micro_f1, total_micro_precision, total_micro_recall, total_acc = get_metrics(total_pred, total_label)
             if args.local_rank == 0:
-                logger.info(" res: f1 %f,\tp %f,\tr %f,\tacc %f.", total_micro_f1, total_micro_precision, total_micro_recall, total_acc)
+                logger.info(" Results: F1 = %f,\tPrecision = %f,\tRecall = %f,\tAccuracy = %f.", total_micro_f1, total_micro_precision, total_micro_recall, total_acc)
             if args.local_rank == 0:
-                logger.info("***** Running valing *****")
+                logger.info("------------------- Running validation -------------------")
                 val_pred, val_label, val_pred_scores = eval_epoch(args, model, val_dataloader, device, n_gpu,
                                                                   label_input, label_mask)
                 val_micro_f1, val_micro_precision, val_micro_recall, val_acc = get_metrics(val_pred, val_label)
                 comp_score = val_micro_f1
-                logger.info(" res: f1 %f,\tp %f,\tr %f,\tacc %f.",
+                logger.info(" Results: F1 = %f,\tPrecision = %f,\tRecall = %f,\tAccuracy = %f.",
                             val_micro_f1, val_micro_precision, val_micro_recall, val_acc)
                 output_model_file = save_model(args, model, epoch)
+
+                # Early stopping logic with patience
                 if best_score <= comp_score:
                     best_score = comp_score
                     best_output_model_file = output_model_file
+                    patience_counter = 0
+                else:
+                    patience_counter += 1
+
+                if patience_counter >= patience:
+                    logger.info(f"Early stopping triggered after {patience} epochs without improvement.")
+                    logger.info("=" * 80)
+                    break
+
                 logger.info("The best model is: {}, the f1 is: {:.4f}".format(best_output_model_file, best_score))
+        
         if args.local_rank == 0:
-            logger.info('***** Running testing *****')
+            logger.info("\n------------------- Running testing -------------------")
             best_model = load_model(args, n_gpu, device, model_file=best_output_model_file)
             test_pred, test_label, test_pred_scores = eval_epoch(args, best_model, test_dataloader,
                                                                            device, n_gpu, label_input, label_mask)
             test_micro_f1, test_micro_precision, test_micro_recall, test_acc = get_metrics(test_pred, test_label)
-            logger.info(" res: f1 %f,\tp %f,\tr %f,\tacc %f",
+            logger.info(" Testing Results: F1 = %f,\tPrecision = %f,\tRecall = %f,\tAccuracy = %f",
                         test_micro_f1, test_micro_precision, test_micro_recall, test_acc)
 
       
 if __name__ == "__main__":
     main()
-
-
-
