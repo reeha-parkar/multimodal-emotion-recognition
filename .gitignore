@@ -13,20 +13,18 @@ __pycache__/
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
-# Any pdf files
-*.pdf
-
 # CARAT's data
 CARAT/data/train_valid_test.pt
 CARAT/data/cmu_mosei_unaligned_ree.pt
 CARAT/data/omg_emotion_data.pt
 
 
-# Model logs
+# Model logs and checkpoints
 CARAT/model_saved/
 
 # Git repo of OMGEmotion dataset
 # OMGEmotionChallenge/DetailedAnnotations/
 
-
+# GloVe embeddings stored at:
+.vector_cache/
 

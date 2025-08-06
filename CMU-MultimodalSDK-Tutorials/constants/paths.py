@@ -1,7 +1,7 @@
 from typing import Optional
 
 # path to the SDK folder
-SDK_PATH: Optional[str] = "C:/Users/Reeha Parkar/OneDrive/Desktop/Workspace/KCL/Semester 2/Project/mer-project/CMU-MultimodalSDK"
+SDK_PATH: Optional[str] = "C:/Users/Reeha Parkar/OneDrive/Desktop/Workspace/KCL/Semester 2/Project/multimodal-emotion-recognition/CMU-MultimodalSDK/"
 
 # path to the folder where you want to store data
 DATA_PATH: Optional[str] = './data/'

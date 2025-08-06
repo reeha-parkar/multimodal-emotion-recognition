@@ -1,0 +1,55 @@
+AUTHORSHIP DECLARATION
+
+I verify that I am the sole author of the programs contained in this repository, except where explicitly stated to the contrary.
+
+Author: Reeha Parkar
+Date: August 7, 2025
+Signature: Reeha Parkar
+
+EXCEPTIONS AND ACKNOWLEDGMENTS
+
+The following components are based on or derived from existing open-source projects:
+
+1. CARAT Framework Base:
+   - Original CARAT model implementation adapted from publicly available research code
+   - Modified and extended for custom variable-length multimodal processing
+   - Source: https://github.com/chengzju/CARAT 
+
+2. CMU-MultimodalSDK:
+   - Used for initial data loading and preprocessing utilities
+   - Source: https://github.com/A2Zadeh/CMU-MultimodalSDK
+   - License: Follows original repository licensing terms
+
+3. Dataset:
+   - CMU-MOSEI dataset used under academic research terms
+   - Custom preprocessing and unaligned data preparation performed by author
+   - Source: http://multicomp.cs.cmu.edu/resources/cmu-mosei-dataset/
+
+4. Secondary Dataset:
+   - OMG-Emotion dataset equipped with continuous emotion labels used for transfer learning
+   - Source: https://github.com/knowledgetechnologyuhh/OMGEmotionChallenge 
+
+5. King's College London:
+   - KCL's e-Research group, Computational Research, Engineering and Technology Environment (CREATE)
+   - High-performance computing resources used for access to NVIDIA A100 (40/80GB)
+   - Source: https://doi.org/10.18742/rnvf-m076
+
+ORIGINAL CONTRIBUTIONS
+
+The following components represent original work by the author:
+
+- Custom unaligned CMU-MOSEI data preparation pipeline
+- Variable-length temporal processing implementation
+- Adaptive CTC module integration for multimodal emotion recognition
+- Custom dataloader for variable timestep sequences
+- Training optimization and hyperparameter tuning procedures
+- Comprehensive evaluation and analysis framework
+- All experimental design and result interpretation
+
+ACADEMIC PURPOSE
+
+This code repository supports academic research conducted as part of a Master's dissertation at King's College London. The work focuses on enhancing multimodal emotion recognition through variable-length temporal processing and unaligned data handling.
+
+Repository: https://github.com/reeha-parkar/multimodal-emotion-recognition
+Institution: King's College London
+Academic Year: 2024-2025
