@@ -12,6 +12,7 @@ This directory contains the datasets required for training and evaluating the CA
   - Visual: 126-3,140 timesteps (FacetNet 35-dim) 
   - Audio: 400-10,891 timesteps (COVAREP 74-dim)
 - **Creation**: Generated using `../My-Experiments/cmu-mosei-create_custom_unaligned.ipynb`
+- Hosted on [HuggingFace](https://huggingface.co/datasets/reeha-parkar/custom-unaligned-CMU-MOSEI)
 
 ### 2. Original Aligned CMU-MOSEI Dataset (Optional)
 - **File**: `train_valid_test.pt`
@@ -47,7 +48,7 @@ data/
 ├── cmu_mosei_unaligned_ree.pt    # Custom variable-length dataset (primary)
 ├── train_valid_test.pt           # Original aligned dataset (optional)
 ├── omg_emotion_data.pt           # OMGEmotion V/A dataset (for transfer learning)
-└── readme.txt                   # This file
+└── readme.md                     # This file
 ```
 
 ## Data Formats
