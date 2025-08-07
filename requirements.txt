@@ -35,7 +35,7 @@ debugpy==1.8.13
 decorator==5.2.1
 defusedxml==0.7.1
 dill==0.3.8
-en-core-web-sm @ file:///cephfs/volumes/hpc_data_usr/k24083007/2070c87e-fe07-4f03-a6c4-cae0de8ce617/en_core_web_sm-3.8.0.tar.gz#sha256=14a2f31bc476af87019819ea8c9948fabdfd473a442edd6b1cba62bf0c2c0f55
+#en-core-web-sm @ file:///cephfs/volumes/hpc_data_usr/k24083007/2070c87e-fe07-4f03-a6c4-cae0de8ce617/en_core_web_sm-3.8.0.tar.gz#sha256=14a2f31bc476af87019819ea8c9948fabdfd473a442edd6b1cba62bf0c2c0f55
 evaluate==0.4.3
 executing==2.2.0
 facenet-pytorch==2.6.0
@@ -60,13 +60,7 @@ huggingface-hub==0.30.1
 idna==3.10
 imageio==2.37.0
 imageio-ffmpeg==0.6.0
-ipykernel==6.29.5
-ipython==9.0.2
-ipython_pygments_lexers==1.1.1
-ipywidgets==8.1.5
 isoduration==20.11.0
-jax==0.7.0
-jaxlib==0.7.0
 jedi==0.19.2
 Jinja2==3.1.6
 jmespath==1.0.1
@@ -104,7 +98,7 @@ mdurl==0.1.2
 mediapipe==0.10.21
 mistune==3.1.3
 ml_dtypes==0.5.1
-mmsdk @ file:///cephfs/volumes/hpc_data_usr/k24083007/2070c87e-fe07-4f03-a6c4-cae0de8ce617/cmu-mosei-experiments/CMU-MultimodalSDK
+#mmsdk @ file:///cephfs/volumes/hpc_data_usr/k24083007/2070c87e-fe07-4f03-a6c4-cae0de8ce617/cmu-mosei-experiments/CMU-MultimodalSDK
 moviepy==2.2.1
 mpmath==1.3.0
 msgpack==1.1.1
